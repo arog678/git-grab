@@ -1,0 +1,10 @@
+.rowTitle{
+	display: inline-block;
+	margin-left: 1em;
+	font-weight: bold;
+}
+
+.rowContent{
+	display: inline-block;
+	margin-left: 1em;
+}

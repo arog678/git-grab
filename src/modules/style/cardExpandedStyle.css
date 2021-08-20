@@ -1,0 +1,11 @@
+.cardDetailed {
+		border-radius: 0.25em;
+		/*differnt to buttons*/
+		border: 1px solid black; 
+		/*display: inline-block;*/
+		width: 50%;
+		margin: auto;
+		margin-bottom: 0.5em;
+		text-align: left;
+	
+}

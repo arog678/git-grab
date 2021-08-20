@@ -1,0 +1,50 @@
+:root {
+	--colorOne: #32be32;
+	--colorTwo: rgba(91, 255, 91, 0.884);
+	--paddingOne: 5px;
+}
+
+.checkBoxInputDiv{
+	border-radius: 1em;
+	padding: var(--paddingOne);
+}
+
+.checkedItem{
+	color: white;
+	background: var(--colorTwo);
+	padding: var(--paddingOne);
+}
+
+.searchComponentDiv{
+	display: inline-block;
+	border-radius: 1em;
+	padding: var(--paddingOne);
+}
+
+.textInput{
+	border-radius: 1em;
+	padding: var(--paddingOne);
+}
+
+.checkBoxInputDiv{
+
+}
+
+.sortDisp{
+
+}
+
+
+.textInputDiv{
+	display: inline-block;
+}
+
+.textSearchIcon{
+	color: var(--colorTwo);
+	display: inline-block;
+	padding: var(--paddingOne);
+}
+
+.textSearchButton{
+	
+}

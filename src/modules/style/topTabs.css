@@ -1,0 +1,25 @@
+:root{
+	--tabColorOne: blue;
+	--tabColorTwo: green;
+	--tabColorThree: lightblue;
+
+	--tabColorFour: rgb(172, 140, 200);
+	--tabColorFive: rgb(130, 43, 206);
+	--tabColorSix: rgb(47, 235, 210);
+}
+
+.tabSelected{
+	background: var(--tabColorSix) !important;
+}
+
+.tabItem{
+	width: 25%;
+    display: inline-block;
+    padding: 1em;
+    background: var(--tabColorFive);
+}
+
+.tabContainer{
+	margin: auto;
+	background-color: var(--tabColorFour);
+}

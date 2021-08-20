@@ -1,0 +1,15 @@
+.pageDiv{
+	margin: auto;
+}
+
+.pageButton{
+	border: 1px black solid;
+	border-radius: 1em;
+	display: inline-block;
+	padding: 5px; /*change to relative*/
+}
+
+.disableClick{
+	color: grey;
+	border-color: grey;
+}

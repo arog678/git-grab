@@ -1,0 +1,64 @@
+:root{
+	--tabColorFour: rgb(172, 140, 200);
+	--tabColorFive: rgb(130, 43, 206);
+	--tabColorSix: rgb(47, 235, 210);
+
+}
+
+.searchComponentDiv{
+	display: inline-block;
+	/*May make block in mobile*/
+}
+
+.textInputDiv{
+	display: inline-block;
+}
+
+.textInput{
+	border: 1px solid black;
+	border-radius: 1em;
+}
+
+.textSearchIcon{
+	display: inline-block;
+}
+
+.textSearchButton{
+	border: 1px solid var(--tabColorFive);
+	border-radius: 1em;
+	color: white;
+	background-color: var(--tabColorFive);
+}
+
+.checkBoxInputDiv{
+
+}
+
+.checkedItem{
+	color: white;
+	background-color: var(--tabColorFive);
+}
+
+.sortDisp{
+	float: right;
+}
+
+.searchMain{
+	width: 100%;
+	background-color: var(--tabColorSix);
+}
+
+.stickyParent{
+	/* height: 70px; */
+	position: sticky;
+	z-index: 100;
+	top: 0;
+}
+
+.stickySearch{
+	/*display: flex;*/
+    align-items: center;
+    position: sticky;
+    /*height: 120px;*/
+    position: sticky;
+}

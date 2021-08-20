@@ -1,0 +1,40 @@
+:root {
+	--colorTextBright: black;
+	--colorBackgroundBright: white;
+	--colorTextDark: white;
+	--colorBackgroundDark: black;
+	--paddingOne: 5px;
+}
+
+.headerText{
+	/*linear-gradient( 0deg ,var(--tabColorSix),#64acff)*/
+	/*font-size: 1.5em;*/
+	font-size: 2em;
+	color: var(--colorTextDark);
+	display: inline-block;
+	background: -webkit-linear-gradient(
+		-70deg
+		,#a2facf,#64acff);
+    -webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+    -webkit-box-decoration-break: clone;
+}
+
+.HeaderDiv{
+	background-color: var(--colorBackgroundDark);
+	width: 100%;
+}
+
+.styleButtonsDiv{
+	display: inline-block;
+    float: right;
+    position: absolute;
+    right: 1em;
+}
+
+.styleButton{
+	border: 1px var(--colorTextDark) solid;
+	border-radius: 1em;
+	color:var(--colorTextDark);
+	display: inline-block;
+}

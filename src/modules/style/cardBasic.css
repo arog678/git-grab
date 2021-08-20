@@ -1,0 +1,68 @@
+:root{
+	--buttonBackgound: white;
+	--buttonText: black;
+}
+
+.avatarImg{
+	height: 3em;
+	width: 3em;
+	border-radius: 1em;
+}
+
+.avatarDiv{
+	display: inline-block;
+    height: 100%;
+    position: relative;
+    left: 0px;
+    margin: auto;
+	/*border: 1px solid red;*/
+	clear: both;
+	/* width: 2em; */
+	float: left;
+	/* width: 9%; */
+	height: 100%;
+	bottom: 0%;
+	padding-top: 0.5em;
+	padding-left: 0.5em
+}
+
+.cardButton{
+	border-radius: 1em;
+	padding: .5em;
+	background-color: var(--buttonBackgound);
+	color: var(--buttonText);
+	border: 1px solid var(--buttonText);
+}
+
+.basicCardDetail{
+	border-radius: 0.25em;
+	/*differnt to buttons*/
+	border: 1px solid black; 
+	/*display: inline-block;*/
+	width: 50%;
+	margin: auto;
+	margin-bottom: 0.5em;
+	text-align: left;
+
+}
+
+.cardMain{
+    width: 85%;
+    display: inline-block;
+    /* border: 1px solid blue; */
+    text-align: left;
+    margin-left: .5em;
+}
+
+.cardInfoBasic{
+	font-size: 1.5em;
+}
+
+.titleInfo{
+	display: inline-block;
+}
+
+.bottomDiv{
+	clear: both;
+	margin-bottom: 0.5em;
+}
