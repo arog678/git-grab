@@ -1,8 +1,8 @@
-#TODO:
-Change what shows on each window on first load
-Create recently searched
-Show saved items in cardlist
-Clear cardlist on tabchange
+#TODO:\
+Change what shows on each window on first load\
+Create recently searched\
+Show saved items in cardlist\
+Clear cardlist on tabchange\
 
 
 # Getting Started with Create React App
