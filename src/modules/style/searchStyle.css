@@ -2,6 +2,13 @@
 	--tabColorFour: rgb(172, 140, 200);
 	--tabColorFive: rgb(130, 43, 206);
 	--tabColorSix: rgb(47, 235, 210);
+	
+	--tabColorSeven: rgb(77, 250, 180);
+	--tabColorEight: rgb(13, 66, 148);
+	--tabColorNine: rgb(81, 100, 129);
+
+	--tabMainColor: black;
+	--tabOtherColor: grey;
 
 }
 
@@ -24,28 +31,38 @@
 }
 
 .textSearchButton{
-	border: 1px solid var(--tabColorFive);
+	border: 1px solid white;
 	border-radius: 1em;
 	color: white;
-	background-color: var(--tabColorFive);
+	/*background-color: var(--tabOtherColor);*/
+	padding: 0.4em;
+	cursor: pointer;
 }
 
-.checkBoxInputDiv{
-
-}
 
 .checkedItem{
-	color: white;
-	background-color: var(--tabColorFive);
+	color: black;
+	background-color: white;
 }
 
 .sortDisp{
 	float: right;
+	margin-left: .2em;
+    background: black;
+    color: white;
+    padding: .1em;
+    padding-left: .25em;
+    /* float: right; */
+    /* top: 0px; */
+    /* display: inline-flex; */
+    border-radius: 1em;
+    padding-right: .25em;
 }
 
 .searchMain{
 	width: 100%;
-	background-color: var(--tabColorSix);
+	background-color: var(--tabMainColor);
+	margin-bottom: 1em;
 }
 
 .stickyParent{

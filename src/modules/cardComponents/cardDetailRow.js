@@ -15,7 +15,7 @@ class CardDetailCell extends Component {
 	render() {
 		return (
 			<div className="cardRow">
-				<div className="rowTitle">
+				<div className="rowTitle noSelect">
 					{this.props.title}
 				</div>
 				<div className="rowContent">

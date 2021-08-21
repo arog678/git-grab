@@ -50,6 +50,8 @@ export function projectURL(paramsLocation) {
 	const createdAtSortID = parseInt(params.get('createdAtSort'));
 	const nameSortID = parseInt(params.get('nameSort'));
 	const page = params.get("page");
+	console.log(params);
+	console.log(page);
 
 	//const searchParams = this.getCurrentSearchParams();
 	let http = "https://api.github.com/search/repositories?q=";

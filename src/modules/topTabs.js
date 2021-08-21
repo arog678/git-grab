@@ -33,7 +33,7 @@ class TopTabs extends Component {
 		}
 
 		return (
-			<div className="tabContainer">
+			<div className="tabContainer noSelect">
 				{tabElements}
 			</div>
 		)

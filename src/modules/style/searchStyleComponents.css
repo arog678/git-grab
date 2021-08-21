@@ -7,18 +7,23 @@
 .checkBoxInputDiv{
 	border-radius: 1em;
 	padding: var(--paddingOne);
+	border: white 1px solid;
+	cursor: pointer;
 }
 
 .checkedItem{
-	color: white;
-	background: var(--colorTwo);
+	color: black;
+	background: white;
 	padding: var(--paddingOne);
+	cursor: pointer;
 }
 
 .searchComponentDiv{
 	display: inline-block;
 	border-radius: 1em;
 	padding: var(--paddingOne);
+	color: white;
+
 }
 
 .textInput{
@@ -26,13 +31,6 @@
 	padding: var(--paddingOne);
 }
 
-.checkBoxInputDiv{
-
-}
-
-.sortDisp{
-
-}
 
 
 .textInputDiv{
@@ -43,8 +41,19 @@
 	color: var(--colorTwo);
 	display: inline-block;
 	padding: var(--paddingOne);
+	cursor: pointer;
 }
 
 .textSearchButton{
 	
 }
+
+.noSelect {
+	-webkit-touch-callout: none; /* iOS Safari */
+	  -webkit-user-select: none; /* Safari */
+	   -khtml-user-select: none; /* Konqueror HTML */
+		 -moz-user-select: none; /* Old versions of Firefox */
+		  -ms-user-select: none; /* Internet Explorer/Edge */
+			  user-select: none; /* Non-prefixed version, currently
+									supported by Chrome, Edge, Opera and Firefox */
+  }

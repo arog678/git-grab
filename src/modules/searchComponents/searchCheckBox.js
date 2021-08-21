@@ -5,8 +5,9 @@ class SearchCheckBox extends Component {
 	
 	constructor(props) {
 		super(props);
+		const checkValue = this.props.default !== undefined ? this.props.default : false;
 		this.state = {
-			checkValue: false
+			checkValue
 		};
 	}
 
@@ -23,11 +24,13 @@ class SearchCheckBox extends Component {
 		const checkboxClass = "checkBoxInputDiv" + 
 		(this.state.checkValue ? " checkedItem" : "")
 		return (
-			<div className="searchComponentDiv">
+			<div className="searchComponentDiv noSelect">
 				<div className={checkboxClass} 
 				onClick={() => this.setCheckbox()}>
 					<span>{this.props.title}</span>
 					<input checked={this.state.checkValue}
+					labelStyle={{color: 'white'}}
+					iconStyle={{fill: 'white'}}				  
 					name="textInput" className="textInput" type="checkbox"
 					></input>
 				</div>

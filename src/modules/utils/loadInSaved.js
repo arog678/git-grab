@@ -10,12 +10,14 @@ export default async function loadSaved(options) {
 	const typeList = []
 	if (options.user) typeList.push("user");
 	if (options.project) typeList.push("project");
+	options.textSearch = options.textSearch.toLowerCase();
 
 	const filterFunc = (i) => {
 		console.log(i);
 		if (!typeList.includes(i.type)) return false;
 		console.log(i);
-		if (!i.name.includes(options.textSearch)) return false;
+		if (!i.name.toLowerCase().includes(options.textSearch)) return false;
+		console.log(i);
 		return true
 	};
 
@@ -38,7 +40,7 @@ export default async function loadSaved(options) {
 	let currentPage = 1;
 	let currentPageStart = 0; //index = 1
 	if (options.page !== undefined && options.page !== 1) {
-		currentPage = Math.min(options.page, lastPage);
+		currentPage = Math.max(Math.min(options.page, lastPage), 1); //temp fix to page = 0 bug
 		currentPageStart = (currentPage - 1) * pageSize;
 	}
 	//let currentPageLen = pageSize; //index = 30
@@ -46,7 +48,11 @@ export default async function loadSaved(options) {
 	//	currentPageLen = len;
 	//}
 
-	const savedItemsOnPage = savedItems.splice(currentPageStart, pageSize);
+	console.log(options);
+	console.log(savedItems);
+	console.log(currentPageStart, pageSize);
+
+	const savedItemsOnPage = savedItems.slice(currentPageStart, pageSize);
 
 	const idList = savedItemsOnPage.reduce((arr, i) => {
 		arr.push(i.itemId);

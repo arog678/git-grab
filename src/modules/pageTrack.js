@@ -44,18 +44,32 @@ class PageTrack extends Component {
 		else return null;
 	}
 
-	movePage(callback) {
-		const params = new URLSearchParams(this.props.location.search);
+	movePage(moveRef) {
+		const params = new URLSearchParams(this.props.history.location.search);
 		const paramPage = params.get("page")
 		let page = paramPage;
-		if (page === undefined) page = 1;
-		const pageNum = callback(page);
-		if (paramPage !== undefined) {
-			const pageOld = "page=" + paramPage;
-			const pageNew = "page=" + pageNum;
-			this.props.history.location.search.replace(pageOld, pageNew);
+		if (page === undefined || page === null) page = 1;
+		else page = parseInt(paramPage);
+		const pageDict = {
+			"first": 1,
+			"prev": Math.max(1, (page - 1)),
+			"next": Math.min(this.props.lastPage, (page + 1)),
+			"last": this.props.lastPage
 		}
-		const path = this.props.history.location.search + this.props.history.location.search
+		const pageNum = pageDict[moveRef];
+		console.log(pageNum, this.props.lastPage)
+		let path = this.props.history.location.search
+
+		if (paramPage !== undefined && paramPage !== null) {
+			const pageOld = "&page=" + paramPage;
+			const pageNew = "&page=" + pageNum;
+			console.log({pageOld, pageNew});
+			path = path.replace(pageOld, pageNew);
+		} else {
+			const pageNew = "&page=" + pageNum;
+			path = path + pageNew;
+		}
+		console.log(path)
 		this.props.history.push(path);
 		
 
@@ -74,16 +88,16 @@ class PageTrack extends Component {
 		const turnBackClass = atStart ? "pageButton disableClick" : "pageButton";
 		const turnNextClass = atEnd ? "pageButton disableClick" : "pageButton";
 
-		pageItems.push(<div onClick={() => this.firstPage()} className={turnBackClass}>First</div>);
-		pageItems.push(<div  onClick={() => this.prevPage()} className={turnBackClass}>Prev</div>);
+		pageItems.push(<div onClick={() => this.movePage("first")} className={turnBackClass}>First</div>);
+		pageItems.push(<div onClick={() => this.movePage("prev")} className={turnBackClass}>Prev</div>);
 		pageItems.push(<div className="pageButton">{currentPage}/{lastPage}</div>);
-		pageItems.push(<div onClick={() => this.nextPage()} className={turnNextClass}>Next</div>);
-		pageItems.push(<div onClick={() => this.lastPage()} className={turnNextClass}>Last</div>);
+		pageItems.push(<div onClick={() => this.movePage("next")} className={turnNextClass}>Next</div>);
+		pageItems.push(<div onClick={() => this.movePage("last")} className={turnNextClass}>Last</div>);
 
 		
 		return (
 			<div >
-				<div className="pageDiv">
+				<div className="pageDiv noSelect">
 					{pageItems}
 				</div>
 			</div>

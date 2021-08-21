@@ -28,11 +28,12 @@ class SearchSortButton extends Component {
 		(this.state.sortID ? " checkedItem" : "")
 		const sortDisp = ["", "ASC", "DESC"];
 		return (
-			<div className="searchComponentDiv"
+			<div className="searchComponentDiv noSelect"
 			onClick={() => this.changeSort()}>
 				<div className={checkboxClass} >
 					<span>{this.props.title}</span>
-					<span className="sortDisp">{sortDisp[this.state.sortID]}</span>
+					{this.state.sortID !== 0 ? 
+					<span className="sortDisp">{sortDisp[this.state.sortID]}</span> : null}
 				</div>
 			</div>
 		)

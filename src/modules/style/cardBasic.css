@@ -32,6 +32,7 @@
 	background-color: var(--buttonBackgound);
 	color: var(--buttonText);
 	border: 1px solid var(--buttonText);
+	margin-right: .25em;
 }
 
 .basicCardDetail{
@@ -39,11 +40,18 @@
 	/*differnt to buttons*/
 	border: 1px solid black; 
 	/*display: inline-block;*/
-	width: 50%;
+	/*width: 50%;*/
 	margin: auto;
 	margin-bottom: 0.5em;
 	text-align: left;
 
+}
+
+@media (min-width: 700px) {
+	.basicCardDetail{
+		width: 50%;
+
+	}
 }
 
 .cardMain{
@@ -65,4 +73,8 @@
 .bottomDiv{
 	clear: both;
 	margin-bottom: 0.5em;
+}
+
+.descText{
+	word-break: break-word;
 }

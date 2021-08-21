@@ -13,12 +13,17 @@ class TopHeader extends Component {
 
 
 	render() {
+		const ldButtons = 				
+			<div className="styleButtonsDiv">
+				<div className="styleButton">Light</div>
+				<div className="styleButton">Dark</div>
+			</div>
+		//may bring back at some point
+
 		return (
 			<div className="HeaderDiv">
-				<div className="headerText">GIT GRAB</div>
-				<div className="styleButtonsDiv">
-					<div className="styleButton">Light</div>
-					<div className="styleButton">Dark</div>
+				<div className="titleBox">
+					<span className="headerText">GIT GRAB</span>
 				</div>
 			</div>
 		)

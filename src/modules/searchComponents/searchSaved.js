@@ -58,9 +58,9 @@ class SearchSaved extends Component {
 		return (
 			<div className="searchMain">
 				<SearchTextInput searchSignal={() => this.searchSaved()} ref={this.searchTextRef}></SearchTextInput>
+				<SearchCheckBox title="Project" default={true} ref={this.projectCheck}></SearchCheckBox>
+				<SearchCheckBox title="User" default={true} ref={this.userCheck}></SearchCheckBox>
 				<SearchSortButton title="Date Saved" ref={this.dateSavedRef}></SearchSortButton>
-				<SearchCheckBox title="Project" ref={this.projectCheck}></SearchCheckBox>
-				<SearchCheckBox title="User" ref={this.userCheck}></SearchCheckBox>
 			</div>
 		)
 	}

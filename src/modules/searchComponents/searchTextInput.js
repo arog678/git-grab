@@ -47,7 +47,7 @@ class SearchTextInput extends Component {
 					name="textInput" className="textInput" type="text"
 					></input>
 				</div>
-				<div className="textSearchIcon">
+				<div className="textSearchIcon noSelect">
 					<span className="textSearchButton" 
 					onClick={() => this.searchGit()}
 					>SEARCH</span>

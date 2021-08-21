@@ -71,8 +71,8 @@ class SearchProject extends Component {
 		return (
 			<div className="searchMain stickySearch">
 				<SearchTextInput searchSignal={() => this.searchProjects()} ref={this.searchTextRef}></SearchTextInput>
-				<SearchSortButton title="Followers" ref={this.followerOrder}></SearchSortButton>
 				<SearchCheckBox title="Featured" ref={this.featuredCheck}></SearchCheckBox>
+				<SearchSortButton title="Followers" ref={this.followerOrder}></SearchSortButton>
 				<SearchSortButton title="Name" ref={this.nameOrder}></SearchSortButton>
 				<SearchSortButton title="Created At" ref={this.createdAtOrder}></SearchSortButton>
 			</div>
