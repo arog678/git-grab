@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/git-grab/static/css/main.f58e255e.chunk.css",
-    "main.js": "/git-grab/static/js/main.88c40cd0.chunk.js",
-    "main.js.map": "/git-grab/static/js/main.88c40cd0.chunk.js.map",
+    "main.js": "/git-grab/static/js/main.84e65c96.chunk.js",
+    "main.js.map": "/git-grab/static/js/main.84e65c96.chunk.js.map",
     "runtime-main.js": "/git-grab/static/js/runtime-main.0d0c6e65.js",
     "runtime-main.js.map": "/git-grab/static/js/runtime-main.0d0c6e65.js.map",
-    "static/js/2.46527ad2.chunk.js": "/git-grab/static/js/2.46527ad2.chunk.js",
-    "static/js/2.46527ad2.chunk.js.map": "/git-grab/static/js/2.46527ad2.chunk.js.map",
+    "static/js/2.a4aad7b2.chunk.js": "/git-grab/static/js/2.a4aad7b2.chunk.js",
+    "static/js/2.a4aad7b2.chunk.js.map": "/git-grab/static/js/2.a4aad7b2.chunk.js.map",
     "static/js/3.efdbc2da.chunk.js": "/git-grab/static/js/3.efdbc2da.chunk.js",
     "static/js/3.efdbc2da.chunk.js.map": "/git-grab/static/js/3.efdbc2da.chunk.js.map",
     "index.html": "/git-grab/index.html",
     "static/css/main.f58e255e.chunk.css.map": "/git-grab/static/css/main.f58e255e.chunk.css.map",
-    "static/js/2.46527ad2.chunk.js.LICENSE.txt": "/git-grab/static/js/2.46527ad2.chunk.js.LICENSE.txt",
+    "static/js/2.a4aad7b2.chunk.js.LICENSE.txt": "/git-grab/static/js/2.a4aad7b2.chunk.js.LICENSE.txt",
     "static/media/logo.6ce24c58.svg": "/git-grab/static/media/logo.6ce24c58.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.0d0c6e65.js",
-    "static/js/2.46527ad2.chunk.js",
+    "static/js/2.a4aad7b2.chunk.js",
     "static/css/main.f58e255e.chunk.css",
-    "static/js/main.88c40cd0.chunk.js"
+    "static/js/main.84e65c96.chunk.js"
   ]
 }
