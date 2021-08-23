@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import GitCardList from "./gitCardList";
 import PageTrack from "./pageTrack";
 import SearchHeader from "./searchHeader";
@@ -11,86 +11,36 @@ import { queryMain } from "./utils/handleQuery";
 import RecentSearchSelect from "./recentSearchSelect";
 import FooterContact from "./footerContact";
 import "./style/mainStyle.css";
+import LargeSearchBox from "./searchComponents/largeSearchBox";
+import "./style/homePage.css";
 
-class MainDiv extends Component {
+class HomePage extends Component {
 	
 	constructor(props) {
 		super(props);
-		console.log(props.history.location);
-		console.log(props.history.location.pathname);
 		//const params = new URLSearchParams(props.history.location.search);
 		this.state = {
-			currentTab: this.props.history.location.pathname.slice(1),
-			gitResponse: null,
-			currentPage: 1,
-			searchParams: {},
-			urlDict: {},
-			lastPage: 1,
-			recentSearches: [],
-			currentTextSearch: ""
-			//tabData: {},
+			recentSearchesDict: {
+				project: [], 
+				user: [], 
+				saved: []
+			},
 		};
 		
 	}
 
 	async componentWillMount() {
 		this.unlisten = this.props.history.listen(async (location, action) => {
-			if (location.pathname === "/") return;
-			console.log("MOVE");
-			this.getQuery();
+			//console.log("MOVE");
+			//this.getQuery();
 		});
 		//run after construct
 		const params = new URLSearchParams(this.props.history.location.search);
-		if (params.get("textSearch") !== null) {
-			this.getQuery();
-		} else {
-			const recentSearches = await this.fillRecentSearches();
-			this.setState({recentSearches, currentTextSearch: ""});
-		}
+		const recentSearchesDict = await this.fillRecentSearches();
+		this.setState({recentSearchesDict});
 	}
 
-	async getQuery() {
-		console.log("on route change");
-		console.log("componentDidMount");
-		//const params = new URLSearchParams(this.props.history.location.pathname);
-		const propParam = this.props.history.location.search;
-		console.log(propParam);
-		if (propParam === undefined || propParam === "") {
-			const tabCheck = this.props.history.location.pathname.slice(1);
-			if (this.state.currentTab !== tabCheck) {
-				//const tabData = this.state.tabData;
-				//tabData[this.state.currentTab] = this.
-				console.log("TAB CHECK");
-				const recentSearches = await this.fillRecentSearches(tabCheck);
-				this.setState({currentTab: tabCheck, gitResponse: null, recentSearches});
-			}
-			return;
-		}
-		console.log("ahsid");
-		const queryRes = await queryMain(propParam, this.state.currentTab);
-		console.log(queryRes);
-		const params = new URLSearchParams(propParam);
-
-		const totalCount = Math.min(queryRes.resp.total_count, 1000); //can only display first 1000
-		const perPage = 30; //30 by default
-		const lastPage = Math.ceil(totalCount / perPage);		
-
-		let currentPage = params.get("page") !== null ? params.get("page") : 1;
-		if (lastPage < currentPage) {
-			currentPage = lastPage;
-		}
-
-		console.log("currentPage", currentPage)
-
-		const currentTextSearch = params.get("textSearch");
-
-		this.setState({
-			gitResponse: queryRes.items,
-			currentPage, 
-			lastPage,
-			currentTextSearch,
-		});
-	}
+	
 
 	componentWillUnmount() {
 		this.unlisten();
@@ -192,26 +142,21 @@ class MainDiv extends Component {
 		});
 	}
 
-	async fillRecentSearches(tab = this.state.currentTab) {
-		const dbRef = {
-			"project": "recentProjectSearches",
-			"user": "recentUserSearches",
-			"saved": "recentSavedSearches",
-		}
-		const table = dbRef[tab]
-		const recentSearches = await db[table].toArray();
-		return recentSearches;
+	async fillRecentSearches() {
+
+		const promiseArray = [];
+		promiseArray.push(db.recentProjectSearches.toArray());
+		promiseArray.push(db.recentUserSearches.toArray());
+		promiseArray.push(db.recentSavedSearches.toArray());
+
+		const [project, user, saved] = await Promise.all(promiseArray);
+		console.log(project, user, saved);
+
+		return {project, user, saved};
 	}
 
 	pageMove() {
 
-	}
-
-	toastTest() {
-		console.log(this.toastContainer);
-		this.toastContainer.success(`hi! Now is `, `///title\\\\\\`, {
-			closeButton: true,
-		  });
 	}
 
 	testLoad() {
@@ -227,25 +172,55 @@ class MainDiv extends Component {
 	render() {
 		//https://reactrouter.com/web/guides/quick-start
 		//MUST USE ROUTES HERE
+		//<RecentSearchSelect recentSearches={this.state.recentSearches} history={this.props.history} tab={this.state.currentTab} searchSaved={(savedOptions) => this.onNewSearch({savedOptions})}></RecentSearchSelect>
 		console.log(this.state.currentTab);
 		return (
 			<div >
 				<div id="wrap">
-					<button onClick={() => this.toastTest()}>toastTest</button>
 					<div id="mainContent">
 
 						<TopHeader history={this.props.history}></TopHeader>
-						<TopTabs history={this.props.history} currentTab={this.state.currentTab} tabChange={(tab) => this.onNewSearch({tab})}></TopTabs>
-						<SearchHeader textSearch={this.state.currentTextSearch} history={this.props.history} tab={this.state.currentTab} searchSaved={(savedOptions) => this.onNewSearch({savedOptions})} newSearch={(url) => this.onNewSearch({url})}></SearchHeader>
-						{this.state.gitResponse !== null ? 
 						<div>
-							<GitCardList gitInfo={this.state.gitResponse}></GitCardList>
-							<PageTrack history={this.props.history} currentPage={this.state.currentPage} lastPage={this.state.lastPage} pageMove={(page) => this.onNewSearch({page})}></PageTrack>
+							<LargeSearchBox history={this.props.history}></LargeSearchBox>
 						</div>
-						: <div>
-							<div><h2 className="recentSearchTitle">Recent Searches</h2></div>
-							<RecentSearchSelect recentSearches={this.state.recentSearches} history={this.props.history} tab={this.state.currentTab} searchSaved={(savedOptions) => this.onNewSearch({savedOptions})}></RecentSearchSelect>
-						</div>}
+						<div><h2 className="recentSearchTitle">Recent Searches</h2></div>
+						<div className="recentSearchContainer">
+							<div className="recentSearchesMain">
+								<div className="recentSearchBox">
+									<div className="recentSectionTitle"><span>Projects</span></div>
+									<RecentSearchSelect 
+									recentSearches={this.state.recentSearchesDict["project"]} 
+									history={this.props.history} tab="project" 
+									searchSaved={(savedOptions) => this.onNewSearch({savedOptions})} 
+									small={true}></RecentSearchSelect>
+								</div>
+							</div>
+
+							<div className="recentSearchesMain">
+								<div className="recentSearchBox">
+									<div className="recentSectionTitle"><span>User</span></div>
+									<RecentSearchSelect 
+									recentSearches={this.state.recentSearchesDict["user"]} 
+									history={this.props.history} tab="user" 
+									searchSaved={(savedOptions) => this.onNewSearch({savedOptions})} 
+									small={true}></RecentSearchSelect>
+								</div>
+							</div>
+
+							<div className="recentSearchesMain">
+								<div className="recentSearchBox">
+									<div className="recentSectionTitle"><span>Saved</span></div>
+									<RecentSearchSelect 
+									recentSearches={this.state.recentSearchesDict["saved"]} 
+									history={this.props.history} tab="saved" 
+									searchSaved={(savedOptions) => this.onNewSearch({savedOptions})} 
+									small={true}></RecentSearchSelect>
+								</div>
+							</div>
+						</div>
+						
+						
+						
 					</div>
 
 				</div>
@@ -257,4 +232,4 @@ class MainDiv extends Component {
 
 }
 
-export default MainDiv;
+export default HomePage;

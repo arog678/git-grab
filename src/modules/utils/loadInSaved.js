@@ -7,6 +7,11 @@ export default async function loadSaved(options) {
 	//page
 	//textSearch
 
+	if (options.project === undefined) options["project"] = true;
+	if (options.user === undefined) options["user"] = true;
+	console.log(options);
+
+
 	const typeList = []
 	if (options.user) typeList.push("user");
 	if (options.project) typeList.push("project");
@@ -24,14 +29,13 @@ export default async function loadSaved(options) {
 	console.log(await db.savedItems.filter(filterFunc).toArray());
 	
 	console.log(await db.savedItems.where("type").anyOf(typeList).toArray());
-	let savedItems;
+	let savedItems = await db.savedItems.filter(filterFunc).toArray();
 	
-	if (options.dateSaved === undefined || options.dateSaved === "") 
-		savedItems = await db.savedItems.filter(filterFunc).toArray();
-	else if (options.dateSaved === "asc") 
-		savedItems = await db.savedItems.filter(filterFunc).sortBy("dateSaved").toArray();
-	else 
-		savedItems = await db.savedItems.filter(filterFunc).reverse().sortBy("dateSaved").toArray();
+	if (options.dateSaved === "asc") {
+		savedItems = savedItems.sortBy("dateSaved").toArray();
+	} else if (options.dateSaved === "desc") {
+		savedItems = savedItems.reverse().sortBy("dateSaved").toArray();
+	}
 
 	const pageSize = 30;
 	const len = savedItems.length;

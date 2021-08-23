@@ -19,18 +19,25 @@ class SearchCheckBox extends Component {
 		return this.state.checkValue;
 	}
 
+	checkChange() {
+
+	}
+
 
 	render() {
 		const checkboxClass = "checkBoxInputDiv" + 
 		(this.state.checkValue ? " checkedItem" : "")
+		let mainClass="searchComponentDiv noSelect";
+		if (this.props.alt) mainClass += " altStyle";
 		return (
-			<div className="searchComponentDiv noSelect">
+			<div className={mainClass}>
 				<div className={checkboxClass} 
 				onClick={() => this.setCheckbox()}>
 					<span>{this.props.title}</span>
 					<input checked={this.state.checkValue}
 					labelStyle={{color: 'white'}}
-					iconStyle={{fill: 'white'}}				  
+					iconStyle={{fill: 'white'}}	
+					onChange={() => this.checkChange()}			  
 					name="textInput" className="textInput" type="checkbox"
 					></input>
 				</div>

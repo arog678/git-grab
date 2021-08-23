@@ -9,6 +9,8 @@
 	padding: var(--paddingOne);
 	border: white 1px solid;
 	cursor: pointer;
+	border: 2px solid white;
+    border-radius: 2em;
 }
 
 .checkedItem{
@@ -29,6 +31,30 @@
 .textInput{
 	border-radius: 1em;
 	padding: var(--paddingOne);
+}
+
+.altStyle{
+	background: transparent;
+	
+	color: black;
+	
+   
+    cursor: pointer;
+}
+
+.altStyle .checkBoxInputDiv{
+	padding: 0;
+    border: transparent 1px solid;
+	marin-left: 1em;
+}
+
+.searchButtonAlt{
+	color: black !important;
+	border: 1px solid black !important;
+	
+	background: white;
+	
+    border-radius: 0px !important;
 }
 
 
@@ -57,3 +83,31 @@
 			  user-select: none; /* Non-prefixed version, currently
 									supported by Chrome, Edge, Opera and Firefox */
   }
+
+  .altTextInput{
+	  border-radius: 0 !important;
+	  width: 12em;
+  }
+
+  .altDropdown select{
+	  margin-left: 1em;
+	  height: 2em;
+	  width: 10em;
+  }
+
+  .altButton{
+	  	width: 6em;
+		margin-left: 1em;
+		height: 1.5em;
+		border: 1px solid white;
+		/* border-radius: 1em; */
+		color: white;
+		/* background-color: var(--tabOtherColor); */
+		/* padding: 0.4em; */
+		cursor: pointer;
+		background: white;
+		color: black;
+		border: 1px solid;
+		padding: 0 !important;
+  }
+

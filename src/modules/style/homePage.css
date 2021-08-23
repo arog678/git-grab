@@ -1,0 +1,45 @@
+.recentSearchesMain{
+	margin: 1em;
+	vertical-align:top;
+	padding: .5em;
+	border-radius: .5em;
+	text-align: left;
+	background: rgba(255,255,255,0.8);
+    border: 1px solid rgba(200,200,200,0.8);
+	
+}
+
+.recentSearchBox{
+
+	
+
+}
+
+.recentSearchContainer{
+	display: inline-block;
+	width: 100%;
+
+}
+
+@media (min-width: 700px) {
+	.recentSearchContainer{
+		width: 60%;
+		border-top: rgba(200,200,200,0.8) 1px solid;
+
+	}
+
+	.recentSearchesMain{
+		width: 25%;
+		display: inline-block;
+
+	}
+}
+
+.recentSearchTitle{
+	margin-bottom: 0.25em;
+}
+
+.recentSectionTitle{
+	margin-bottom: .25em;
+    border-bottom: 1px solid rgba(200,200,200,0.7);
+}

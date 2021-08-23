@@ -1,0 +1,25 @@
+#mainContent{    
+
+
+	
+}
+
+#wrap{
+	min-height: calc(100vh - 2.5em); 
+	background: #f6f8fa;
+
+}
+
+.recentSearchContainer{
+	display: inline-block;
+	width: 100%;
+
+}
+
+@media (min-width: 700px) {
+	.recentSearchContainer{
+		width: 60%;
+		border-top: rgba(200,200,200,0.8) 1px solid;
+
+	}
+}

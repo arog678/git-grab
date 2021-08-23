@@ -3,6 +3,7 @@ import SearchCheckBox from "./searchCheckBox";
 import SearchSortButton from "./searchSortButton";
 import SearchTextInput from "./searchTextInput";
 import "../style/searchStyle.css";
+import { pushProjectSearchData } from "../utils/savingUtil";
 
 class SearchProject extends Component {
 	
@@ -54,6 +55,7 @@ class SearchProject extends Component {
 		if (requestParams !== "?") {
 			const currentPath = this.props.history.location.pathname;
 			const newPath = currentPath + requestParams;
+			pushProjectSearchData(this.searchTextRef.current.getTextInput(), requestParams);
 			this.props.history.push(newPath);
 		}
 	}

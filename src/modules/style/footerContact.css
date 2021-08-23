@@ -1,0 +1,19 @@
+.footerDiv{
+	background-color: gray;
+	color: white;
+	text-align: left;
+	height: 2.5em;
+}
+
+
+.contactInfoRow{
+	margin-left: 2em;
+	font-size: 0.7em;
+}
+
+.title{
+	font-weight: bold;
+
+	margin-right: 1em;
+}
+

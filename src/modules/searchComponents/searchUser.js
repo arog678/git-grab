@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import SearchSortButton from "./searchSortButton";
 import SearchTextInput from "./searchTextInput";
+import { pushUserSearchData } from "../utils/savingUtil";
 
 class SearchUser extends Component {
 	
@@ -52,6 +53,7 @@ class SearchUser extends Component {
 		if (requestParams !== "?") {
 			const currentPath = this.props.history.location.pathname;
 			const newPath = currentPath + requestParams;
+			pushUserSearchData(this.searchTextRef.current.getTextInput(), requestParams);
 			this.props.history.push(newPath);
 		}
 	}

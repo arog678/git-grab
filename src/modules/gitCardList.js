@@ -4,7 +4,12 @@ import CardExpandedUser from "./cardComponents/cardExpandedUser";
 import CardExpandedProject from "./cardComponents/cardExpanedProject";
 import db from "./utils/database";
 import { getProjectDetails, getUserDetails } from "./utils/getGitHttp";
-import saveItem from "./utils/savingUtil";
+import { saveItem } from "./utils/savingUtil";
+import "./style/gitCardList.css";
+
+//import TransitionGroup from 'react-transition-group'; // ES6
+//var ReactCSSTransitionGroup = require('react-transition-group'); // ES5 with npm
+
 
 
 class GitCardList extends Component {
@@ -23,6 +28,7 @@ class GitCardList extends Component {
 			openDict: this.setupOpenDict(),
 			extraInfo: {}
 		};
+		this.notificationTimeout = null;
 	}
 
 	async addExtraInfo(item, type) {
@@ -67,9 +73,19 @@ class GitCardList extends Component {
 
 	//mountcomponent stuff here
 
-	saveObject(info, type) {
+	async saveObject(info, type) {
 		console.log(saveItem);
-		saveItem(info, type);
+		await saveItem(info, type);
+		this.savedNotification();
+	}
+
+
+	savedNotification() {
+		this.setState({showSaved: true});
+			clearTimeout(this.notificationTimeout);
+			this.notificationTimeout = setTimeout(() => {
+				this.setState({showSaved: false});
+			}, 2000);
 	}
 
 
@@ -100,6 +116,9 @@ class GitCardList extends Component {
 
 		return (
 			<div >
+				{this.state.showSaved ? <div className="savedNote">Saved!</div> : null}
+						
+
 				{cardList}
 			</div>
 		)

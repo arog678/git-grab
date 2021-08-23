@@ -4,7 +4,10 @@ const db = new Dexie('myDb');
 db.version(1).stores({
     project: `id, name, url, createdAt, updatedAt, desc, userImg, userName, userLink`,
 	user: "id, name, url, createdAt, updatedAt, desc, userImg",
-	savedItems: "++id, itemId, dateSaved, type, name"
+	savedItems: "++id, itemId, dateSaved, type, name",
+	recentProjectSearches: "++id, textSearch, otherInfo",
+	recentUserSearches: "++id, textSearch, otherInfo",
+	recentSavedSearches: "++id, textSearch, otherInfo",
 });
 
 export default db;

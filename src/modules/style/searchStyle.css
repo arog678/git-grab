@@ -31,12 +31,12 @@
 }
 
 .textSearchButton{
-	border: 1px solid white;
-	border-radius: 1em;
 	color: white;
 	/*background-color: var(--tabOtherColor);*/
 	padding: 0.4em;
 	cursor: pointer;
+	border: 2px solid white;
+    border-radius: 2em;
 }
 
 
@@ -64,6 +64,17 @@
 	background-color: var(--tabMainColor);
 	margin-bottom: 1em;
 }
+
+.altStyleButton{
+	border: 1px solid rgba(200,200,200,0.8);
+	
+	color: black;
+	background: white !important;
+	/*border-radius: .5em;*/
+
+}
+
+
 
 .stickyParent{
 	/* height: 70px; */

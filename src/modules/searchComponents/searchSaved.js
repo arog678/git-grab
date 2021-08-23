@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import SearchCheckBox from "./searchCheckBox";
 import SearchSortButton from "./searchSortButton";
 import SearchTextInput from "./searchTextInput";
+import { pushSavedSearchData } from "../utils/savingUtil";
 
 class SearchSaved extends Component {
 	
@@ -27,6 +28,7 @@ class SearchSaved extends Component {
 	}
 
 	searchSaved() {
+		pushSavedSearchData(this.searchTextRef.current.getTextInput(), {});
 		this.props.savedRequest(this.getCurrentSearchParams());
 	}
 
