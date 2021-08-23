@@ -4,14 +4,17 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {
-	BrowserRouter 
+	BrowserRouter ,
+	HashRouter
   } from "react-router-dom";
   
 
 ReactDOM.render(
-<BrowserRouter>
-    <App/>
-  </BrowserRouter>,
+	<React.StrictMode>
+    <HashRouter>
+      <App />
+    </HashRouter>
+  </React.StrictMode>,
   document.getElementById('root')
 );
 
