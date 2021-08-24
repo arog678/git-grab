@@ -1,5 +1,6 @@
 # git-grab
 TODO:\
+Double check searches are sending corret requests to git.\
 Fix text not showing in inputs upon search.\
 Add in fa icons.\
 Code Clean-up.\
