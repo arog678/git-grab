@@ -1,5 +1,6 @@
 # git-grab
 TODO:\
+Update url of project to show topics not projects.\
 Double check searches are sending corret requests to git.\
 Fix text not showing in inputs upon search.\
 Add in fa icons.\
