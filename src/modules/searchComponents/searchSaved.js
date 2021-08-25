@@ -57,10 +57,11 @@ class SearchSaved extends Component {
 
 
 	render() {
+		//PROJECT TITLE CHANGED TO TOPIC TO FIX MASSIVE FUCKUP
 		return (
 			<div className="searchMain">
 				<SearchTextInput searchSignal={() => this.searchSaved()} ref={this.searchTextRef}></SearchTextInput>
-				<SearchCheckBox title="Project" default={true} ref={this.projectCheck}></SearchCheckBox>
+				<SearchCheckBox title="Topic" default={true} ref={this.projectCheck}></SearchCheckBox>
 				<SearchCheckBox title="User" default={true} ref={this.userCheck}></SearchCheckBox>
 				<SearchSortButton title="Date Saved" ref={this.dateSavedRef}></SearchSortButton>
 			</div>

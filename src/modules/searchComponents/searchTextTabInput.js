@@ -59,7 +59,7 @@ class SearchTextInput extends Component {
 
 				<div className="textInputDiv altDropdown">
 					<select value={this.state.tab} onChange={(e) => this.handleTabChange(e)}>
-						<option selected value="project">Projects</option>
+						<option selected value="project">Topics</option>
 						<option value="user">Users</option>
 						<option value="saved">Saved</option>
 					</select>

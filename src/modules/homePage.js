@@ -187,7 +187,7 @@ class HomePage extends Component {
 						<div className="recentSearchContainer">
 							<div className="recentSearchesMain">
 								<div className="recentSearchBox">
-									<div className="recentSectionTitle"><span>Projects</span></div>
+									<div className="recentSectionTitle"><span>Topics</span></div>
 									<RecentSearchSelect 
 									recentSearches={this.state.recentSearchesDict["project"]} 
 									history={this.props.history} tab="project" 
