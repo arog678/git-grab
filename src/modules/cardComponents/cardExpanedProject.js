@@ -38,7 +38,7 @@ class CardExpandedProject extends Component {
 			const createdAt = <span>{this.props.info.createdAt}</span>
 			const updatedAt = <span>{this.props.info.updatedAt}</span>
 			const released = <span>{this.props.info.released}</span>
-			const desc = <span>{this.props.info.longDesc}</span>
+			const desc = <span>{this.props.info.decsLong}</span>
 	
 			return (
 				<div className="basicCardDetail">
