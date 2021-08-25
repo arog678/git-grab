@@ -27,7 +27,8 @@ class MainDiv extends Component {
 			urlDict: {},
 			lastPage: 1,
 			recentSearches: [],
-			currentTextSearch: ""
+			currentTextSearch: "",
+			loading: false
 			//tabData: {},
 		};
 		
@@ -50,6 +51,7 @@ class MainDiv extends Component {
 	}
 
 	async getQuery() {
+		this.setState({loading: true}); 
 		console.log("on route change");
 		console.log("componentDidMount");
 		//const params = new URLSearchParams(this.props.history.location.pathname);
@@ -62,7 +64,7 @@ class MainDiv extends Component {
 				//tabData[this.state.currentTab] = this.
 				console.log("TAB CHECK");
 				const recentSearches = await this.fillRecentSearches(tabCheck);
-				this.setState({currentTab: tabCheck, gitResponse: null, recentSearches});
+				this.setState({loading: false, currentTab: tabCheck, gitResponse: null, recentSearches});
 			}
 			return;
 		}
@@ -87,6 +89,7 @@ class MainDiv extends Component {
 		this.setState({
 			gitResponse: queryRes.items,
 			currentPage, 
+			loading: false,
 			lastPage,
 			currentTextSearch,
 		});
@@ -183,11 +186,13 @@ class MainDiv extends Component {
 
 
 
+
 		this.setState({
 			currentTab: tab,
 			gitResponse: response.items,
 			currentPage, 
 			lastPage,
+			loading: false, 
 			urlDict,
 		});
 	}
@@ -224,28 +229,38 @@ class MainDiv extends Component {
 		loadSaved({users: true, projects: true, textSearch: "tetris"});
 	}
 
+	getMainSearchContent() {
+		if (this.state.loading) return (<div>Requesting Data</div>);
+		else if (this.state.gitResponse !== null) {
+			return (<div>
+				<GitCardList gitInfo={this.state.gitResponse}></GitCardList>
+				<PageTrack history={this.props.history} currentPage={this.state.currentPage} lastPage={this.state.lastPage} pageMove={(page) => this.onNewSearch({page})}></PageTrack>
+			</div>);
+
+		} else {
+			return (<div>
+			<div><h2 className="recentSearchTitle">Recent Searches</h2></div>
+				<RecentSearchSelect recentSearches={this.state.recentSearches} history={this.props.history} tab={this.state.currentTab} searchSaved={(savedOptions) => this.onNewSearch({savedOptions})}></RecentSearchSelect>
+			</div>);
+		}
+	}
+
 	render() {
 		//https://reactrouter.com/web/guides/quick-start
 		//MUST USE ROUTES HERE
 		console.log(this.state.currentTab);
+		
+
+		const mainSearchContent = this.getMainSearchContent();
 		return (
 			<div >
 				<div id="wrap">
-					<button onClick={() => this.toastTest()}>toastTest</button>
 					<div id="mainContent">
 
 						<TopHeader history={this.props.history}></TopHeader>
 						<TopTabs history={this.props.history} currentTab={this.state.currentTab} tabChange={(tab) => this.onNewSearch({tab})}></TopTabs>
 						<SearchHeader textSearch={this.state.currentTextSearch} history={this.props.history} tab={this.state.currentTab} searchSaved={(savedOptions) => this.onNewSearch({savedOptions})} newSearch={(url) => this.onNewSearch({url})}></SearchHeader>
-						{this.state.gitResponse !== null ? 
-						<div>
-							<GitCardList gitInfo={this.state.gitResponse}></GitCardList>
-							<PageTrack history={this.props.history} currentPage={this.state.currentPage} lastPage={this.state.lastPage} pageMove={(page) => this.onNewSearch({page})}></PageTrack>
-						</div>
-						: <div>
-							<div><h2 className="recentSearchTitle">Recent Searches</h2></div>
-							<RecentSearchSelect recentSearches={this.state.recentSearches} history={this.props.history} tab={this.state.currentTab} searchSaved={(savedOptions) => this.onNewSearch({savedOptions})}></RecentSearchSelect>
-						</div>}
+						{mainSearchContent}
 					</div>
 
 				</div>

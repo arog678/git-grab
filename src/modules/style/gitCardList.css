@@ -1,11 +1,10 @@
 .savedNote{
 	position: fixed;
     color: white;
-    margin-right: 5em;
+    margin-right: 3em;
     margin-bottom: 1em;
     padding: .5em;
     display: block;
-    position: absolute;
     bottom: 0;
     right: 0;
     font-size: 1.5em;

@@ -70,6 +70,8 @@ class PageTrack extends Component {
 			path = path + pageNew;
 		}
 		console.log(path)
+		window.scrollTo(0, 0);
+
 		this.props.history.push(path);
 		
 

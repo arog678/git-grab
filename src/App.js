@@ -9,6 +9,7 @@ import {
 	Link,
 	useHistory,
 	useLocation,
+	HashRouter,
 	Redirect
   } from "react-router-dom";
 
@@ -25,12 +26,18 @@ function App() {
 
   return (
     <div className="App">
-		<Router>
+		<HashRouter >
 			<Switch>
-				<Route exact path="/"><div>home</div></Route>
-				
+			<Route exact path="/"><Redirect to="/home" /></Route>
+				<Route path="/home" history={history} component={HomePage}></Route>
+				<Route path="/project" history={history} tab="projects" component={MainDiv}/>
+				<Route path="/user" history={history} tab="user" component={MainDiv}/>
+				<Route path="/saved" history={history} tab="saved" component={MainDiv}/>
+				<Route path="/about" tab={query.get("tab")}>
+					<About/>
+				</Route>
 			</Switch>
-		</Router>
+		</HashRouter >
     </div>
   );
 }
