@@ -102,6 +102,7 @@ class PageTrack extends Component {
 				<div className="pageDiv noSelect">
 					{pageItems}
 				</div>
+				<div className="bottomGap"></div>
 			</div>
 		)
 	}
