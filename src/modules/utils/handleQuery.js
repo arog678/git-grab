@@ -54,18 +54,18 @@ export function projectURL(paramsLocation) {
 	console.log(page);
 
 	//const searchParams = this.getCurrentSearchParams();
-	let http = "https://api.github.com/search/repositories?q=";
+	let http = "https://api.github.com/search/topics?q=";
 	const searchString = textSearch.replace(" ", "+");
 	const isFeature = featured ? "+is:featured" : "";
 	http = http + searchString + isFeature;
 
 	const sortList = ["", "asc", "desc"];
 	const nameSort = nameSortID !== 0 ? 
-	"sort=name&order=" + sortList[nameSortID] : "";
+	"&sort=name&order=" + sortList[nameSortID] : "";
 	const createdAtSort = createdAtSortID !== 0 ? 
-	"sort=created&order=" + sortList[createdAtSortID] : "";
-	const sortString = "&sort=" + nameSort + createdAtSort;
-	if (sortString !== "&sort=") {
+	"&sort=created&order=" + sortList[createdAtSortID] : "";
+	const sortString = "" + nameSort + createdAtSort;
+	if (sortString !== "") {
 		http = http + sortString;
 	}
 	if (page !== undefined && page !== null) http += "&page=" + page;

@@ -128,7 +128,6 @@ class LargeSearchBox extends Component {
 	getProjectButtons() {
 		return <div>
 			<SearchCheckBox alt={true} title="Show only featured projects" ref={this.featuredCheck}></SearchCheckBox><br></br>
-			<SearchSortButton alt={true} title="Order by followers of project" ref={this.followerOrder}></SearchSortButton><br></br>
 			<SearchSortButton alt={true} title="Order by name of project" ref={this.nameOrder}></SearchSortButton><br></br>
 			<SearchSortButton alt={true} title="Order by date of project creation" ref={this.createdAtOrder}></SearchSortButton><br></br>
 		</div>

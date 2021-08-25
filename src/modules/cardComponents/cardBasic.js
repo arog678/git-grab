@@ -35,14 +35,13 @@ class CardBasic extends Component {
 		return (
 			<div className="basicCardDetail">
 				<div className="avatarDiv">
+				{(this.props.type === "user") ?
 					<span><img alt={info.name} className="avatarImg" src={info.userImg}></img></span>
+					:null}
 				</div>
 				<div className="cardMain cardInfoBasic">
 					<div className="titleInfo">
-						{(this.props.type === "project") ?
-							<span><a href={info.url}>{info.name}</a> - <a href={info.userLink}>{info.userName}</a></span> : 
-							<span><a href={info.url}>{info.name}</a></span>
-						}
+						<span><a href={info.url}>{info.name}</a></span>
 					</div>
 					<div className="descDiv">
 						<div className="descText">{info.desc}</div>

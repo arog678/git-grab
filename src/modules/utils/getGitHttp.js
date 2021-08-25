@@ -1,7 +1,11 @@
 export async function getHttpRequest(url, type) {
 	return new Promise((res) => {
 		
-	fetch(url)
+	fetch(url, {headers: {
+		//'Content-Type': 'application/json'
+		"Accept": "application/vnd.github.mercy-preview+json"
+		// 'Content-Type': 'application/x-www-form-urlencoded',
+	  }})
 	.then(async response => {
 		const resp = await response.json();
 		if (type === "project") {
@@ -20,15 +24,17 @@ export function trimProjectData(projectResponseText) {
 	const projectData = [];
 	for (const data of projectResponseText.items) {
 		const trimmedData = {
-			id: data.id,
-			name: data.name,
-			url: data.html_url,
+			id: data.name,
+			name: data.display_name === null ? data.name : data.display_name,
+			url: "https://github.com/topics/" + data.name,
 			createdAt: data.created_at,
 			updatedAt: data.updated_at,
-			desc: data.description,
-			userImg: data.owner.avatar_url,
-			userName: data.owner.login,
-			userLink: data.owner.html_url,
+			released: "2008",
+			desc: data.short_description,
+			decsLong: data.description,
+			//userImg: data.owner.avatar_url,
+			//userName: data.owner.login,
+			//userLink: data.owner.html_url,
 			type: "project"
 		};
 		projectData.push(trimmedData);
@@ -103,14 +109,15 @@ export function getProjectDetails(projectID) {
 			const resp = await response.json();
 			const data = resp;
 			const userData = {
-				name: data.name,
-				desc: data.body,
+				name: data.display_name,
+				desc: data.short_description,
+				longDesc: data.description,
 				id: projectID,
 				createdAt: data.created_at,
 				updatedAt: data.updated_at,
-				userImg: data.owner.avatar_url,
-				userName: data.owner.login,
-				userLink: data.owner.html_url,
+				//userImg: data.owner.avatar_url,
+				//userName: data.owner.login,
+				//userLink: data.owner.html_url,
 				type: "project"
 			
 			};
