@@ -2,6 +2,8 @@ import { Component } from "react";
 import "./style/cardBasic.css";
 import db from "./utils/database";
 import pushSearchData from "./utils/savingUtil";
+//import { v4 as uuidv4 } from 'uuid'; //may be a bit heavy
+
 
 class RecentSearchSelect extends Component {
 	
@@ -75,10 +77,14 @@ class RecentSearchSelect extends Component {
 	getRecentSearchesList() {
 		const searchCards = [];
 		const className = this.props.small ? "basicCardDetail smallCard" : "basicCardDetail"
+		let indexCount = 0;
 		for (const item of this.props.recentSearches) {
-			searchCards.push(<div onClick={() => this.searchText(item)} className={className}>
+			//uuidv4(); too heavy
+			const keyName = "recentSearch" + this.state.tab + indexCount;
+			searchCards.push(<div key={keyName} onClick={() => this.searchText(item)} className={className}>
 				<span className="textSearchSpan">{item.textSearch}</span>
 			</div>);
+			indexCount ++;
 		}
 		return <div>{
 			

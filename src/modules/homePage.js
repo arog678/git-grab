@@ -29,7 +29,7 @@ class HomePage extends Component {
 		
 	}
 
-	async componentWillMount() {
+	async componentDidMount() { //FIX THIS //componentWillMount
 		this.unlisten = this.props.history.listen(async (location, action) => {
 			//console.log("MOVE");
 			//this.getQuery();
@@ -189,6 +189,7 @@ class HomePage extends Component {
 								<div className="recentSearchBox">
 									<div className="recentSectionTitle"><span>Topics</span></div>
 									<RecentSearchSelect 
+									key="topicRecent"
 									recentSearches={this.state.recentSearchesDict["project"]} 
 									history={this.props.history} tab="project" 
 									searchSaved={(savedOptions) => this.onNewSearch({savedOptions})} 
@@ -200,6 +201,7 @@ class HomePage extends Component {
 								<div className="recentSearchBox">
 									<div className="recentSectionTitle"><span>User</span></div>
 									<RecentSearchSelect 
+									key="userRecent"
 									recentSearches={this.state.recentSearchesDict["user"]} 
 									history={this.props.history} tab="user" 
 									searchSaved={(savedOptions) => this.onNewSearch({savedOptions})} 
@@ -211,6 +213,7 @@ class HomePage extends Component {
 								<div className="recentSearchBox">
 									<div className="recentSectionTitle"><span>Saved</span></div>
 									<RecentSearchSelect 
+									key="savedRecent"
 									recentSearches={this.state.recentSearchesDict["saved"]} 
 									history={this.props.history} tab="saved" 
 									searchSaved={(savedOptions) => this.onNewSearch({savedOptions})} 

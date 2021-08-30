@@ -27,6 +27,8 @@ export function userURL(paramsLocation) {
 	const sortString = followSort + repositorsSort + joinedSort;
 	if (sortString !== "&") {
 		http = http + sortString;
+	} else {
+		http = http + "&sort=joined&order=desc"
 	}
 	if (page !== undefined && page !== null) http += "&page=" + page;
 	console.log(http);
@@ -75,9 +77,66 @@ export function projectURL(paramsLocation) {
 
 
 export async function projectQuery(paramsLocation) {
-	const url = projectURL(paramsLocation);
-	console.log(url)
-	return await getHttpRequest(url, "project");
+	let url = projectURL(paramsLocation);
+
+	const params = new URLSearchParams(paramsLocation);
+	const requestPageSize = 100;
+	const dispayPageSize = 25;
+	let pageNum = params.get("page");
+	let currentPage = 1;
+	let pageSection = 1;
+	let requestPageNum = 1;
+	let requestIndex = 1;
+	if (pageNum !== null) {
+		requestIndex = (pageNum - 1) * dispayPageSize;
+		requestPageNum = Math.floor((requestIndex/requestPageSize)) + 1;
+		console.log(requestPageNum);
+		url = url.replace(("&page=" + pageNum), ("&page=" + requestPageNum));
+	} else {
+		pageNum = 1;
+	}
+
+	//projectQuery.set("page", requestPageNum);
+
+	console.log(params.get("featured"))
+	url = url + "&per_page=100";
+
+	//this is to fix that screw up
+	const topicsRequest = await getHttpRequest(url, "project");
+	topicsRequest["pageNum"] = pageNum;
+
+	const indexStart = ((pageNum - 1) * dispayPageSize) % 100;
+	let indexEnd = ((pageNum) * dispayPageSize) % 100;
+	if (indexEnd === 0) indexEnd = 100;
+	console.log(pageNum, indexStart, indexEnd, topicsRequest);
+	if (topicsRequest["items"] !== undefined && topicsRequest["items"] !== null) {
+		//sort 1 === asc 
+		//sort 2 === desc
+		const sortFunc = (sortParamName) => {
+			const sortParam = params.get(sortParamName);
+			if (sortParam !== undefined && sortParam !== null && sortParam !== "0") {
+				console.log(sortParam, topicsRequest["items"][0], topicsRequest["items"][1]);
+				console.log(sortParam === "1");
+				topicsRequest["items"].sort((a, b) => {
+					const aName = a.name.toLowerCase();
+					const bName = b.name.toLowerCase();
+					const nameCompare = (aName < bName ? 1 : -1);
+					console.log(a,b,nameCompare);
+					return (sortParam === "1" ? nameCompare : !nameCompare);
+				});
+
+			}
+		};
+		sortFunc("nameSort");
+		sortFunc("createdAtSort")
+
+	} 
+	topicsRequest["items"] = topicsRequest["items"].slice(indexStart, indexEnd);
+
+
+
+	
+	return topicsRequest;
 
 }
 
@@ -97,6 +156,7 @@ export async function savedQuery(paramsLocation) {
 }
 
 export async function queryMain(paramsLocation, type) {
+	console.log(type);
 	if (type === "saved") return await savedQuery(paramsLocation);
 	if (type === "project") return await projectQuery(paramsLocation);
 	if (type === "user") return await userQuery(paramsLocation);

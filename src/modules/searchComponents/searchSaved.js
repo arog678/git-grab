@@ -8,6 +8,14 @@ class SearchSaved extends Component {
 	
 	constructor(props) {
 		super(props);
+		const params = new URLSearchParams(props.history.location.search);
+		this.dateSaved = params.get("dateSaved");
+		this.project = params.get("project");
+		this.user = params.get("user");
+
+		if (this.project === null || this.project === undefined) this.project = true;
+		if (this.user === null || this.user === undefined) this.user = true;
+
 		this.state = {};
 		this.searchTextRef = React.createRef();
 
@@ -61,9 +69,9 @@ class SearchSaved extends Component {
 		return (
 			<div className="searchMain">
 				<SearchTextInput searchSignal={() => this.searchSaved()} ref={this.searchTextRef}></SearchTextInput>
-				<SearchCheckBox title="Topic" default={true} ref={this.projectCheck}></SearchCheckBox>
-				<SearchCheckBox title="User" default={true} ref={this.userCheck}></SearchCheckBox>
-				<SearchSortButton title="Date Saved" ref={this.dateSavedRef}></SearchSortButton>
+				<SearchCheckBox title="Topic" default={this.project} ref={this.projectCheck}></SearchCheckBox>
+				<SearchCheckBox title="User" default={this.user} ref={this.userCheck}></SearchCheckBox>
+				<SearchSortButton title="Date Saved" sortInput={this.dateSaved} ref={this.dateSavedRef}></SearchSortButton>
 			</div>
 		)
 	}

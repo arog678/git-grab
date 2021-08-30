@@ -14,6 +14,10 @@ class TopHeader extends Component {
 	goToFront() {
 		this.props.history.push("/");
 	}
+	
+	goToSaved() {
+		this.props.history.push("/saved");
+	}
 
 	closeAbout() {
 		console.log("CLOSE");
@@ -40,6 +44,7 @@ class TopHeader extends Component {
 		return (
 			<div className="HeaderDiv">
 				<span className="topMenu" onClick={() => this.goToFront()}>Home</span>
+				<span className="topMenu" onClick={() => this.goToSaved()}>Saved</span>
 				<span  className="topMenu" onClick={() => this.openAboutSection()}>About</span>
 				{this.state.showAbout ? 
 					<div className="fullPageItem" onClick={() => this.closeAbout()}>

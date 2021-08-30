@@ -49,9 +49,9 @@ class LargeSearchBox extends Component {
 			paramDict["joinedSort"] = this.joinedOrder.current.getSortID();
 
 		} else if (this.state.tab === "saved") {
-			paramDict["followSort"] = this.dateSavedRef.current.getSortID();
-			paramDict["repositorsSort"] = this.projectCheck.current.getCheckValue();
-			paramDict["joinedSort"] = this.userCheck.current.getCheckValue();		
+			paramDict["dateSaved"] = this.dateSavedRef.current.getSortID();
+			paramDict["project"] = this.projectCheck.current.getCheckValue();
+			paramDict["user"] = this.userCheck.current.getCheckValue();		
 		}
 
 
@@ -68,9 +68,9 @@ class LargeSearchBox extends Component {
 		}
 
 		if (this.state.tab === "saved" || this.props.tab === "saved") {
-			if (searchParams.dateSaved !== "") urlStringList.push(this.dateSavedRef.current.getSortID());
-			if (searchParams.project !== "") urlStringList.push(this.projectCheck.current.getCheckValue());
-			if (searchParams.user !== "") urlStringList.push(this.userCheck.current.getCheckValue());
+			if (searchParams.dateSaved !== "") urlStringList.push("dateSaved=" + searchParams.dateSaved);
+			if (searchParams.project !== "") urlStringList.push("project=" + searchParams.project);
+			if (searchParams.user !== "") urlStringList.push("user=" +searchParams.user);
 		}
 
 		else if (this.state.tab === "project" || this.props.tab === "project") {
@@ -127,25 +127,25 @@ class LargeSearchBox extends Component {
 
 	getProjectButtons() {
 		return <div>
-			<SearchCheckBox alt={true} title="Show only featured topics" ref={this.featuredCheck}></SearchCheckBox><br></br>
-			<SearchSortButton alt={true} title="Order by name of topics" ref={this.nameOrder}></SearchSortButton><br></br>
-			<SearchSortButton alt={true} title="Order by date of topics creation" ref={this.createdAtOrder}></SearchSortButton><br></br>
+			<SearchCheckBox key="featuredCheck" alt={true} title="Show only featured topics" ref={this.featuredCheck}></SearchCheckBox><br></br>
+			<SearchSortButton key="nameSort" alt={true} title="Order by name of topics" ref={this.nameOrder}></SearchSortButton><br></br>
+			<SearchSortButton key="dateSort" alt={true} title="Order by date of topics creation" ref={this.createdAtOrder}></SearchSortButton><br></br>
 		</div>
 	}
 
 	getUserButtons() {
 		return <div>
-			<SearchSortButton alt={true} title="Order by total users followers:" ref={this.followerOrder}></SearchSortButton><br></br>
-			<SearchSortButton alt={true} title="Order by total user Repositors:" ref={this.repositorsOrder}></SearchSortButton><br></br>
-			<SearchSortButton alt={true} title="Order by date Joined:" ref={this.joinedOrder}></SearchSortButton><br></br>
+			<SearchSortButton key="followerSort" alt={true} title="Order by total users followers:" ref={this.followerOrder}></SearchSortButton><br></br>
+			<SearchSortButton key="repoSort" alt={true} title="Order by total user Repositors:" ref={this.repositorsOrder}></SearchSortButton><br></br>
+			<SearchSortButton key="joinSort" alt={true} title="Order by date Joined:" ref={this.joinedOrder}></SearchSortButton><br></br>
 		</div>
 	}
 
 	getSavedButtons() {
 		return <div className="searchButtons">
-			<SearchCheckBox alt={true} title="Show saved projects?" default={true} ref={this.projectCheck}></SearchCheckBox><br></br>
-			<SearchCheckBox alt={true} title="Show saved users?" default={true} ref={this.userCheck}></SearchCheckBox><br></br>
-			<SearchSortButton alt={true} title="Order by dat saved:" ref={this.dateSavedRef}></SearchSortButton><br></br>
+			<SearchCheckBox key="projectCheck" alt={true} title="Show saved projects?" default={true} ref={this.projectCheck}></SearchCheckBox><br></br>
+			<SearchCheckBox key="userCheck" alt={true} title="Show saved users?" default={true} ref={this.userCheck}></SearchCheckBox><br></br>
+			<SearchSortButton key="dateSort" alt={true} title="Order by dat saved:" ref={this.dateSavedRef}></SearchSortButton><br></br>
 		</div>
 	}
 

@@ -11,8 +11,8 @@ class PageTrack extends Component {
 	}
 
 	atEnd() {
-		const currentPage = this.props.currentPage;
-		const lastPage = this.props.lastPage;
+		const currentPage = this.props.currentPage + "";
+		const lastPage = this.props.lastPage + "";
 		return currentPage === lastPage;
 	}
 
@@ -89,18 +89,23 @@ class PageTrack extends Component {
 		const atEnd = this.atEnd();
 		const turnBackClass = atStart ? "pageButton disableClick" : "pageButton";
 		const turnNextClass = atEnd ? "pageButton disableClick" : "pageButton";
+		console.log(turnNextClass, atEnd, currentPage, lastPage);
 
-		pageItems.push(<div onClick={() => this.movePage("first")} className={turnBackClass}>First</div>);
-		pageItems.push(<div onClick={() => this.movePage("prev")} className={turnBackClass}>Prev</div>);
-		pageItems.push(<div className="pageButton">{currentPage}/{lastPage}</div>);
-		pageItems.push(<div onClick={() => this.movePage("next")} className={turnNextClass}>Next</div>);
-		pageItems.push(<div onClick={() => this.movePage("last")} className={turnNextClass}>Last</div>);
+		//pageItems.push(<div onClick={() => this.movePage("first")} className={turnBackClass}>First</div>);
+		//pageItems.push(<div onClick={() => this.movePage("prev")} className={turnBackClass}>Prev</div>);
+		//pageItems.push(<div className="pageButton">{currentPage}/{lastPage}</div>);
+		//pageItems.push(<div onClick={() => this.movePage("next")} className={turnNextClass}>Next</div>);
+		//pageItems.push(<div onClick={() => this.movePage("last")} className={turnNextClass}>Last</div>);
 
 		
 		return (
 			<div >
 				<div className="pageDiv noSelect">
-					{pageItems}
+					<div onClick={() => this.movePage("first")} className={turnBackClass}>First</div>
+					<div onClick={() => this.movePage("prev")} className={turnBackClass}>Prev</div>
+					<div className="pageButton">{currentPage}/{lastPage}</div>
+					<div onClick={() => this.movePage("next")} className={turnNextClass}>Next</div>
+					<div onClick={() => this.movePage("last")} className={turnNextClass}>Last</div>
 				</div>
 				<div className="bottomGap"></div>
 			</div>

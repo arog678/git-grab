@@ -34,7 +34,7 @@ class MainDiv extends Component {
 		
 	}
 
-	async componentWillMount() {
+	async componentDidMount() { //FIX THIS //componentWillMount
 		this.unlisten = this.props.history.listen(async (location, action) => {
 			if (location.pathname === "/") return;
 			console.log("MOVE");
@@ -43,6 +43,8 @@ class MainDiv extends Component {
 		//run after construct
 		const params = new URLSearchParams(this.props.history.location.search);
 		if (params.get("textSearch") !== null) {
+			this.getQuery();
+		} else if (params.get("textSearch") === null && this.state.currentTab === "saved") { 
 			this.getQuery();
 		} else {
 			const recentSearches = await this.fillRecentSearches();
@@ -55,10 +57,10 @@ class MainDiv extends Component {
 		console.log("on route change");
 		console.log("componentDidMount");
 		//const params = new URLSearchParams(this.props.history.location.pathname);
-		const propParam = this.props.history.location.search;
+		let propParam = this.props.history.location.search;
 		console.log(propParam);
-		if (propParam === undefined || propParam === "") {
-			const tabCheck = this.props.history.location.pathname.slice(1);
+		const tabCheck = this.props.history.location.pathname.slice(1);
+		if ((propParam === undefined || propParam === "") && (tabCheck !== "saved")) {
 			if (this.state.currentTab !== tabCheck) {
 				//const tabData = this.state.tabData;
 				//tabData[this.state.currentTab] = this.
@@ -67,18 +69,24 @@ class MainDiv extends Component {
 				this.setState({loading: false, currentTab: tabCheck, gitResponse: null, recentSearches});
 			}
 			return;
+		} else if ((propParam === undefined || propParam === "") && (tabCheck === "saved")) {
+			propParam = "?textSearch=";
+			this.setState({currentTab: tabCheck});
 		}
 		console.log("ahsid");
-		const queryRes = await queryMain(propParam, this.state.currentTab);
+		console.log(this.state.currentTab);
+		const queryRes = await queryMain(propParam, tabCheck === "saved" ? "saved" : this.state.currentTab);
 		console.log(queryRes);
 		const params = new URLSearchParams(propParam);
 
 		const totalCount = Math.min(queryRes.resp.total_count, 1000); //can only display first 1000
-		const perPage = 30; //30 by default
+		const perPage = this.state.currentTab === "project" ? 100 : 30; //100 per topic page, 25 displayed //30 by default 
 		const lastPage = Math.ceil(totalCount / perPage);		
 
 		let currentPage = params.get("page") !== null ? params.get("page") : 1;
-		if (lastPage < currentPage) {
+		if (queryRes.pageNum !== undefined) {
+			currentPage = queryRes.pageNum;
+		} else if (lastPage < currentPage) {
 			currentPage = lastPage;
 		}
 
@@ -240,7 +248,7 @@ class MainDiv extends Component {
 		} else {
 			return (<div>
 			<div><h2 className="recentSearchTitle">Recent Searches</h2></div>
-				<RecentSearchSelect recentSearches={this.state.recentSearches} history={this.props.history} tab={this.state.currentTab} searchSaved={(savedOptions) => this.onNewSearch({savedOptions})}></RecentSearchSelect>
+				<RecentSearchSelect key="recentSearchBox" recentSearches={this.state.recentSearches} history={this.props.history} tab={this.state.currentTab} searchSaved={(savedOptions) => this.onNewSearch({savedOptions})}></RecentSearchSelect>
 			</div>);
 		}
 	}

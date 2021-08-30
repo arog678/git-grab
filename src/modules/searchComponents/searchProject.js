@@ -9,6 +9,17 @@ class SearchProject extends Component {
 	
 	constructor(props) {
 		super(props);
+		console.log(props);
+
+		const params = new URLSearchParams(props.history.location.search);
+		this.textSearch = params.get("textSearch");
+		this.featured = params.get("featured");
+		this.nameSort = params.get("nameSort");
+		this.createdAtSort = params.get("createdAtSort");
+		//featured=true&nameSort=2&createdAtSort=1
+
+		console.log(this.textSearch);
+
 		this.state = {};
 		this.searchTextRef = React.createRef();
 		this.featuredCheck = React.createRef();
@@ -70,12 +81,13 @@ class SearchProject extends Component {
 
 
 	render() {
+
 		return (
 			<div className="searchMain stickySearch">
-				<SearchTextInput searchSignal={() => this.searchProjects()} ref={this.searchTextRef}></SearchTextInput>
-				<SearchCheckBox title="Featured" ref={this.featuredCheck}></SearchCheckBox>
-				<SearchSortButton title="Name" ref={this.nameOrder}></SearchSortButton>
-				<SearchSortButton title="Created At" ref={this.createdAtOrder}></SearchSortButton>
+				<SearchTextInput textInput={this.textSearch} searchSignal={() => this.searchProjects()} ref={this.searchTextRef}></SearchTextInput>
+				<SearchCheckBox default={this.featured} title="Featured" ref={this.featuredCheck}></SearchCheckBox>
+				<SearchSortButton sortInput={this.nameSort} title="Name" ref={this.nameOrder}></SearchSortButton>
+				<SearchSortButton sortInput={this.createdAtSort} title="Created At" ref={this.createdAtOrder}></SearchSortButton>
 			</div>
 		)
 	}

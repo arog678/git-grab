@@ -6,6 +6,7 @@ class SearchCheckBox extends Component {
 	constructor(props) {
 		super(props);
 		const checkValue = this.props.default !== undefined ? this.props.default : false;
+		console.log(checkValue, this.props.default);
 		this.state = {
 			checkValue
 		};
@@ -35,8 +36,8 @@ class SearchCheckBox extends Component {
 				onClick={() => this.setCheckbox()}>
 					<span>{this.props.title}</span>
 					<input checked={this.state.checkValue}
-					labelStyle={{color: 'white'}}
-					iconStyle={{fill: 'white'}}	
+					labelstyle={{color: 'white'}}
+					iconstyle={{fill: 'white'}}	
 					onChange={() => this.checkChange()}			  
 					name="textInput" className="textInput" type="checkbox"
 					></input>

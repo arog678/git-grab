@@ -7,6 +7,13 @@ class SearchUser extends Component {
 	
 	constructor(props) {
 		super(props);
+
+		const params = new URLSearchParams(props.history.location.search);
+		this.textSearch = params.get("textSearch");
+		this.repositorsSort = params.get("repositorsSort");
+		this.followerSort = params.get("followerSort");
+		this.joinedSort = params.get("joinedSort");
+
 		this.state = {};
 		this.searchTextRef = React.createRef();
 		this.followerOrder = React.createRef();
@@ -61,12 +68,13 @@ class SearchUser extends Component {
 
 
 	render() {
+
 		return (
 			<div className="searchMain">
-				<SearchTextInput searchSignal={() => this.searchUsers()} ref={this.searchTextRef}></SearchTextInput>
-				<SearchSortButton title="Followers" ref={this.followerOrder}></SearchSortButton>
-				<SearchSortButton title="Repositors" ref={this.repositorsOrder}></SearchSortButton>
-				<SearchSortButton title="Joined" ref={this.joinedOrder}></SearchSortButton>
+				<SearchTextInput textInput={this.textSearch} searchSignal={() => this.searchUsers()} ref={this.searchTextRef}></SearchTextInput>
+				<SearchSortButton sortInput={this.followerSort} title="Followers" ref={this.followerOrder}></SearchSortButton>
+				<SearchSortButton sortInput={this.repositorsSort} title="Repositors" ref={this.repositorsOrder}></SearchSortButton>
+				<SearchSortButton sortInput={this.joinedSort} title="Joined" ref={this.joinedOrder}></SearchSortButton>
 			</div>
 		)
 	}

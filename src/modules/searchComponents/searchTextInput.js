@@ -5,8 +5,10 @@ class SearchTextInput extends Component {
 	
 	constructor(props) {
 		super(props);
+		
+		const pt = props.textInput
 		this.state = {
-			textInput: ""
+			textInput: (pt !== null && pt !== undefined) ? pt : ""
 		};
 	}
 
