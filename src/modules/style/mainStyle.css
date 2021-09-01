@@ -23,3 +23,13 @@
 
 	}
 }
+
+.largeBoxHolder{
+	width: 620px;
+    position: sticky;
+    float: left;
+    display: block;
+    height: 0;
+	z-index: 100;
+    top: 0;
+}

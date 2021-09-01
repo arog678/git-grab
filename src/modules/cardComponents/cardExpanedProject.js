@@ -34,7 +34,7 @@ class CardExpandedProject extends Component {
 		//could tighten this up
 		if (this.props.info !== undefined) {
 			const name = <span>{this.props.info.name}</span>
-			const url = <span>{this.props.info.url}</span>
+			const url = <span><a href={this.props.info.url}>{this.props.info.url}</a></span>
 			const createdAt = <span>{this.props.info.createdAt}</span>
 			const updatedAt = <span>{this.props.info.updatedAt}</span>
 			const released = <span>{this.props.info.released}</span>
@@ -49,8 +49,8 @@ class CardExpandedProject extends Component {
 						<CardDetailCell title="CreatedAt" content={createdAt}></CardDetailCell>
 						<CardDetailCell title="UpdatedAt" content={updatedAt}></CardDetailCell>
 						<CardDetailCell title="Desc" content={desc}></CardDetailCell>
-						<CardDetailCell title="released" content={released}></CardDetailCell>
-						<div className="bottomButtons">
+						<CardDetailCell title="Released" content={released}></CardDetailCell>
+						<div className="bottomButtons expanded">
 							<button className="cardButton" onClick={() => this.showLess()}>Show Less</button>
 							<button className="cardButton" onClick={() => this.saveObject()}>Save</button>
 						</div>

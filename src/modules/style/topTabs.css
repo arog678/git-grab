@@ -24,18 +24,26 @@
 }
 
 .tabItem{
-	width: 25%;
+	min-width: 25%;
     display: inline-block;
     padding: 0.5em;
-    background: var(--tabOtherColor);
+    /*background: var(--tabOtherColor);*/
     color: white;
-    font-size: 1.5em;
-	cursor: pointer;
+	/*cursor: pointer;*/
+
+    border: 1px solid var(--tabOtherColor);
+    color: var(--tabOtherColor);
+    /*font-size: 1.5em;*/
+
+	font-size: 1em;
 }
 
 .tabContainer{
 	margin: auto;
 	/*background-color: var(--tabColorNine);*/
+	/*text-align: left;*/
+    width: 75%;
+	margin-bottom: .5em;
 }
 
 .titleBox{

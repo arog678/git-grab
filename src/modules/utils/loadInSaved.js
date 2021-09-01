@@ -1,6 +1,9 @@
 import db from './database';
 
 export default async function loadSaved(options) {
+	//need ro trim
+	//all elements will be saved 
+	//need to unsave
 	//users 
 	//projects
 	//date saved sort
@@ -32,10 +35,16 @@ export default async function loadSaved(options) {
 	let savedItems = await db.savedItems.filter(filterFunc).toArray();
 	
 	if (options.dateSaved === "asc") {
-		savedItems = savedItems.sortBy("dateSaved").toArray();
+		savedItems = savedItems.sort((a, b) => {
+			return a.dateSaved - b.dateSaved
+		});
 	} else if (options.dateSaved === "desc") {
-		savedItems = savedItems.reverse().sortBy("dateSaved").toArray();
+		savedItems = savedItems.sort((a, b) => {
+			return b.dateSaved - a.dateSaved
+		});
 	}
+
+	console.log(options, savedItems);
 
 	const pageSize = 30;
 	const len = savedItems.length;
@@ -82,7 +91,7 @@ export default async function loadSaved(options) {
 	const finalPage = [];
 	for (const item of savedItemsOnPage) {
 		const savedItem = savedPage.find(i => i.id === item.itemId);
-		finalPage.push(savedItem);
+		if (savedItem !== undefined) finalPage.push(savedItem); //save error if true
 	}
 
 	return {items: finalPage, resp: {total_count: len}};

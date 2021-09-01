@@ -1,3 +1,11 @@
+:root{
+	--regColor: 	
+	linear-gradient(180deg, hsla(0,0%,100%,0), #fff),
+	linear-gradient(70deg, rgba(175,206,255,.2), 30%, rgba(175,206,255,.2));
+
+	--altColor: #ededed;
+}
+
 .largeSearchBox{
 	width: 50%;
 	border: 1px solid rgba(200,200,200,0.8);;
@@ -58,4 +66,10 @@
 			  -ms-user-select: none; /* Internet Explorer/Edge */
 				  user-select: none; /* Non-prefixed version, currently
 										supported by Chrome, Edge, Opera and Firefox */
+}
+
+.mainSearch{
+	width: 40%;
+	float: left;
+	
 }

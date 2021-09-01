@@ -6,6 +6,7 @@ import db from "./utils/database";
 import { getProjectDetails, getUserDetails } from "./utils/getGitHttp";
 import { saveItem } from "./utils/savingUtil";
 import "./style/gitCardList.css";
+import FullImg from "./fullImg";
 
 //import TransitionGroup from 'react-transition-group'; // ES6
 //var ReactCSSTransitionGroup = require('react-transition-group'); // ES5 with npm
@@ -26,7 +27,10 @@ class GitCardList extends Component {
 
 		this.state = {
 			openDict: this.setupOpenDict(),
-			extraInfo: {}
+			extraInfo: {},
+			notificationText: "",
+			openImg: false,
+			userImg: null
 		};
 		this.notificationTimeout = null;
 	}
@@ -45,6 +49,7 @@ class GitCardList extends Component {
 		console.log(newData);
 		const extraInfo = this.state.extraInfo;
 		extraInfo[item.id] = newData;
+		console.log(1)
 		this.setState({extraInfo});
 
 	}
@@ -60,6 +65,7 @@ class GitCardList extends Component {
 				this.addExtraInfo(item, type);
 			}
 		}
+		console.log(2)
 		this.setState({openDict});
 	}
 
@@ -75,19 +81,58 @@ class GitCardList extends Component {
 
 	async saveObject(info, type) {
 		console.log(saveItem);
-		await saveItem(info, type);
-		this.savedNotification();
+		if (this.props.type === "saved") {
+			const dbItem = await db.savedItems.get({itemId: info.id});
+			const promiseArray = [];
+			promiseArray.push(db.savedItems.delete(dbItem.id));
+			promiseArray.push(db[type].delete(info.id));
+			await Promise.All(promiseArray);
+			this.deleteNotifiction();
+			return;
+		}
+
+		const dbItem = await db.savedItems.get({itemId: info.id});
+		//use this to double check status in db iteself not children
+		const isSaved = dbItem !== undefined && dbItem !== null;
+
+		console.log(info)
+		if (isSaved) {
+			//const dbItem = await db.savedItems.get({itemId: info.id});
+			console.log(dbItem);
+			const promiseArray = [];
+			promiseArray.push(db[type].delete(info.id));
+			promiseArray.push(db.savedItems.delete(dbItem.id));
+			await Promise.all(promiseArray);
+			//this.deleteNotifiction();
+		
+		} else {
+			await saveItem(info, type);
+			this.savedNotification();
+		}
 	}
 
 
 	savedNotification() {
-		this.setState({showSaved: true});
+		console.log(3)
+		this.setState({showSaved: true, notificationText: "Saved!"});
 			clearTimeout(this.notificationTimeout);
 			this.notificationTimeout = setTimeout(() => {
+				console.log(4)
 				this.setState({showSaved: false});
 			}, 2000);
 	}
 
+	openFullImg(userImg) {
+		console.log(userImg);
+		console.log(5)
+		//this.setState({userImg, openImg: true})
+		//THIS WILL BE DISABLED BY DEFAULT
+	}
+
+	closeFullImg() {
+		console.log(6)
+		this.setState({openImg: false})
+	}
 
 
 	render() {
@@ -101,10 +146,12 @@ class GitCardList extends Component {
 					isLoading={isLoading}
 					saveObject={(info) => this.saveObject(info, item.type)}
 					showMore={(info) => this.openDictToggle(info, item.type)}
+					showImg={(userImg) => this.openFullImg(userImg)}
 					info={item} type={item.type}></CardBasic>);
 			} else if (item.type === "user") {
 				cardList.push(<CardExpandedUser info={this.state.extraInfo[item.id]} 
 					saveObject={(info) => this.saveObject(info, item.type)}
+					showImg={(userImg) => this.openFullImg(userImg)}
 					hideItem={(info) => this.openDictToggle(info, item.type)}></CardExpandedUser>);
 			} else {
 				cardList.push(<CardExpandedProject info={this.state.extraInfo[item.id]}
@@ -116,10 +163,16 @@ class GitCardList extends Component {
 
 		return (
 			<div >
-				{this.state.showSaved ? <div className="savedNote">Saved!</div> : null}
+				{this.state.showSaved ? <div className="savedNote">{this.state.notificationText}</div> : null}
 						
 
 				{cardList}
+				{this.state.openImg ?
+					<div className="fullPageItem" >
+						<FullImg closeImgSignal={() => this.closeFullImg()} userImg={this.state.userImg}></FullImg>
+					</div>
+				 : null}
+				
 			</div>
 		)
 	}

@@ -31,29 +31,35 @@ class CardExpandedUser extends Component {
 		this.props.saveObject(this.props.info);
 	}
 
+	showImgFunc() {
+		const img = this.props.info.userImg;
+		console.log("USER CLICK");
+		this.props.showImg(img);
+	}
+
 
 
 
 	render() {
 		//change to load after get request
 		if (this.props.info !== undefined) {
-			const name = <span>this.props.info.name</span>;
+			const name = <span>{this.props.info.name}</span>;
 			const username = <span>{this.props.info.username}</span>;
-			const url = <span>{this.props.info.url}</span>;
-			const userImg = <span>{this.props.info.userImg}</span>;
+			const url = <span><a href={this.props.info.url}>{this.props.info.url}</a></span>;
+			const userImg = <span><a href={this.props.info.userImg}>{this.props.info.userImg}</a></span>;
 			const publicRepos = <span>{this.props.info.publicRepos}</span>;
 			const publicGists = <span>{this.props.info.publicGists}</span>;
 			const followers = <span>{this.props.info.followers}</span>;
 			const following = <span>{this.props.info.following}</span>;
-			const company = <span>{this.props.info.company}</span>;
-			const blog = <span>{this.props.info.blog}</span>;
+			const company = <span><a href={this.props.info.company}>{this.props.info.company}</a></span>;
+			const blog = <span><a href={this.props.info.blog}>{this.props.info.blog}</a></span>;
 			const email = <span>{this.props.info.email}</span>;
 			const bio = <span>{this.props.info.bio}</span>;
 
 			return (
 				<div className="basicCardDetail">
 					<div className="avatarDiv">
-						<span><img alt={this.props.info.name} className="avatarImg" src={this.props.info.userImg}></img></span>
+						<span><img alt={this.props.info.name} onClick={() => this.showImgFunc()} className="avatarImg" src={this.props.info.userImg}></img></span>
 					</div>
 					<div className="cardMain">
 						<CardDetailCell title="Name" content={name}></CardDetailCell>
@@ -68,7 +74,7 @@ class CardExpandedUser extends Component {
 						<CardDetailCell title="blog" content={blog}></CardDetailCell>
 						<CardDetailCell title="email" content={email}></CardDetailCell>
 						<CardDetailCell title="bio" content={bio}></CardDetailCell>
-						<div className="bottomButtons">
+						<div className="bottomButtons expanded">
 							<button className="cardButton" onClick={() => this.showLess()}>show less</button>
 						</div>
 					</div>

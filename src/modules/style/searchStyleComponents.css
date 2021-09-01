@@ -111,3 +111,45 @@
 		padding: 0 !important;
   }
 
+.isMain{
+	text-align: left;
+    width: 90%;
+	
+}
+
+.isMain .textInputDiv{
+	width: calc(100% - 10px);
+	margin-bottom: .5em;
+}
+
+.isMain .textInputDiv input{
+	width: 100%;
+}
+
+.isMain .altDropdown{
+	width: 60%;
+
+}
+
+.isMain .altDropdown select{
+	width: 100%;
+	margin-left:0%;
+}
+
+.isMain .altButton{
+	width: 30%;
+    margin-left: 0;
+    float: right;
+    right: -2px;
+    position: relative;
+	text-align: center;
+}
+
+.mobileGap{
+}
+
+@media(max-width: 700px) {
+	.mobileGap{
+		display: block !important;
+	}
+}

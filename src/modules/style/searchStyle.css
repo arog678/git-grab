@@ -86,7 +86,8 @@
 .stickySearch{
 	/*display: flex;*/
     align-items: center;
-    position: sticky;
+    position: sticky; 
     /*height: 120px;*/
     position: sticky;
 }
+

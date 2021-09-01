@@ -32,6 +32,21 @@ class LargeSearchBox extends Component {
 		this.projectCheck = React.createRef();
 		this.userCheck = React.createRef();
 
+		this.titleDict = {
+			featuredCheck: {main: "Only Featured", home: "Show only featured topics"},
+			nameSort: {main: "Name Order", home: "Order by name of topics"},
+			dateSort: {main: "Date Created Order", home: "Order by date of topics creation"},
+
+			followerSort: {main: "Follower Sort", home: "Order by total users followers"},
+			repoSort: {main: "Repo Sort", home: "Order by total user Repositors"},
+			joinSort: {main: "Date Joined", home: "Order by date Joined"},
+
+			projectCheck: {main: "Show Projects", home: "Show saved projects?"},
+			userCheck: {main: "Show Users", home: "Show saved users?"},
+			dateSort: {main: "Date Saved", home: "Order by dat saved:"},
+
+		};
+
 	}
 
 	getCurrentSearchParams() {
@@ -125,41 +140,56 @@ class LargeSearchBox extends Component {
 		this.setState({advanced});
 	}
 
+	getIsMainDiv() {
+		return this.props.isMainDiv !== undefined && this.props.isMainDiv !== undefined ? this.props.isMainDiv : false;
+	}
+
 	getProjectButtons() {
+		const isMainDiv = this.getIsMainDiv();
+		const dictKey = isMainDiv ? "main" : "home";
+
 		return <div>
-			<SearchCheckBox key="featuredCheck" alt={true} title="Show only featured topics" ref={this.featuredCheck}></SearchCheckBox><br></br>
-			<SearchSortButton key="nameSort" alt={true} title="Order by name of topics" ref={this.nameOrder}></SearchSortButton><br></br>
-			<SearchSortButton key="dateSort" alt={true} title="Order by date of topics creation" ref={this.createdAtOrder}></SearchSortButton><br></br>
+			<SearchCheckBox key="featuredCheck" alt={true} title={this.titleDict["featuredCheck"][dictKey]} ref={this.featuredCheck}></SearchCheckBox><br></br>
+			<SearchSortButton key="nameSort" alt={true} title={this.titleDict["nameSort"][dictKey]} ref={this.nameOrder}></SearchSortButton><br></br>
+			<SearchSortButton key="dateSort" alt={true} title={this.titleDict["dateSort"][dictKey]} ref={this.createdAtOrder}></SearchSortButton><br></br>
 		</div>
 	}
 
 	getUserButtons() {
+		const isMainDiv = this.getIsMainDiv();
+		const dictKey = isMainDiv ? "main" : "home";
+
 		return <div>
-			<SearchSortButton key="followerSort" alt={true} title="Order by total users followers:" ref={this.followerOrder}></SearchSortButton><br></br>
-			<SearchSortButton key="repoSort" alt={true} title="Order by total user Repositors:" ref={this.repositorsOrder}></SearchSortButton><br></br>
-			<SearchSortButton key="joinSort" alt={true} title="Order by date Joined:" ref={this.joinedOrder}></SearchSortButton><br></br>
+			<SearchSortButton key="followerSort" alt={true} title={this.titleDict["followerSort"][dictKey]} ref={this.followerOrder}></SearchSortButton><br></br>
+			<SearchSortButton key="repoSort" alt={true} title={this.titleDict["repoSort"][dictKey]} ref={this.repositorsOrder}></SearchSortButton><br></br>
+			<SearchSortButton key="joinSort" alt={true} title={this.titleDict["joinSort"][dictKey]} ref={this.joinedOrder}></SearchSortButton><br></br>
 		</div>
 	}
 
 	getSavedButtons() {
+		const isMainDiv = this.getIsMainDiv();
+		const dictKey = isMainDiv ? "main" : "home";
+
 		return <div className="searchButtons">
-			<SearchCheckBox key="projectCheck" alt={true} title="Show saved projects?" default={true} ref={this.projectCheck}></SearchCheckBox><br></br>
-			<SearchCheckBox key="userCheck" alt={true} title="Show saved users?" default={true} ref={this.userCheck}></SearchCheckBox><br></br>
-			<SearchSortButton key="dateSort" alt={true} title="Order by dat saved:" ref={this.dateSavedRef}></SearchSortButton><br></br>
+			<SearchCheckBox key="projectCheck" alt={true} title={this.titleDict["projectCheck"][dictKey]} default={true} ref={this.projectCheck}></SearchCheckBox><br></br>
+			<SearchCheckBox key="userCheck" alt={true} title={this.titleDict["userCheck"][dictKey]} default={true} ref={this.userCheck}></SearchCheckBox><br></br>
+			<SearchSortButton key="dateSort" alt={true} title={this.titleDict["dateSort"][dictKey]} ref={this.dateSavedRef}></SearchSortButton><br></br>
 		</div>
 	}
 
 
 	render() {
+		const isMainDiv = this.getIsMainDiv();
+
 		let advancedFeatures;
 		if (this.state.tab === "project") advancedFeatures = this.getProjectButtons();
 		else if (this.state.tab === "user") advancedFeatures = this.getUserButtons();
 		else if (this.state.tab === "saved") advancedFeatures = this.getSavedButtons();
 		return (
-			<div className="largeSearchBox">
+			<div className={"largeSearchBox" + (isMainDiv ? " mainSearch stickyParent" : "")}>
 				{this.props.tab !== undefined ? 
 				<SearchTextInput alt={true} searchSignal={() => this.searchGit()} ref={this.searchTextRef}></SearchTextInput>
-				: <SearchTextTabInput alt={true} tabChange={(tab) => this.tabChangeState(tab)} searchSignal={() => this.searchGit()} ref={this.searchTextRef}></SearchTextTabInput>}
+				: <SearchTextTabInput alt={true} isMainDiv={isMainDiv} tabChange={(tab) => this.tabChangeState(tab)} searchSignal={() => this.searchGit()} ref={this.searchTextRef}></SearchTextTabInput>}
 				
 				<div className="advancedDiv">
 					<span className="advancedToggle noSelect" onClick={() => this.toggleAdvanced()}>{!this.state.advanced ? "Show Advanced Options +" : "Hide Advanced Options -"}</span>

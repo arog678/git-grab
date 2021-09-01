@@ -39,7 +39,17 @@ export function userURL(paramsLocation) {
 export async function userQuery(paramsLocation) {
 	const url = userURL(paramsLocation);
 	console.log(url);
-	return await getHttpRequest(url, "user");
+	
+	const promiseArray = []
+	promiseArray.push(await getHttpRequest(url, "user"));
+	promiseArray.push(await db.savedItems.toArray());//figurre out
+	let [usersRequest, savedKeys] = await Promise.all(promiseArray);
+	savedKeys = savedKeys.map(i => i.itemId);
+	usersRequest["items"].map(i => i.saved = savedKeys.includes(i.id));
+	
+	
+	return await usersRequest;
+
 
 }
 
@@ -77,6 +87,8 @@ export function projectURL(paramsLocation) {
 
 
 export async function projectQuery(paramsLocation) {
+	//combine with user maybe?
+	//add extra as callback
 	let url = projectURL(paramsLocation);
 
 	const params = new URLSearchParams(paramsLocation);
@@ -102,7 +114,12 @@ export async function projectQuery(paramsLocation) {
 	url = url + "&per_page=100";
 
 	//this is to fix that screw up
-	const topicsRequest = await getHttpRequest(url, "project");
+	const promiseArray = []
+	promiseArray.push(await getHttpRequest(url, "project"));
+	promiseArray.push(await db.savedItems.toArray());//figurre out
+	let [topicsRequest, savedKeys] = await Promise.all(promiseArray);
+	savedKeys = savedKeys.map(i => i.itemId);
+
 	topicsRequest["pageNum"] = pageNum;
 
 	const indexStart = ((pageNum - 1) * dispayPageSize) % 100;
@@ -129,6 +146,7 @@ export async function projectQuery(paramsLocation) {
 		};
 		sortFunc("nameSort");
 		sortFunc("createdAtSort")
+		topicsRequest["items"].map(i => i.saved = savedKeys.includes(i.id));
 
 	} 
 	topicsRequest["items"] = topicsRequest["items"].slice(indexStart, indexEnd);

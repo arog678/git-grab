@@ -58,7 +58,7 @@ class SearchUser extends Component {
 		//this.props.searchRequest(this.generateRequest());
 		const requestParams = this.generateRequest();
 		if (requestParams !== "?") {
-			const currentPath = this.props.history.location.pathname;
+			const currentPath = this.props.history.location.pathname; // redundant will alway how user
 			const newPath = currentPath + requestParams;
 			pushUserSearchData(this.searchTextRef.current.getTextInput(), requestParams);
 			this.props.history.push(newPath);

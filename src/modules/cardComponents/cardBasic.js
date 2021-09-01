@@ -12,31 +12,41 @@ class CardBasic extends Component {
 		//last update "updated_at"
 
 		//created at "created_at
+		const isSaved = this.props.info.saved || this.props.type === "saved";
 		this.state = {
-			
+			isSaved
 		};
 	}
 
 	saveObject(info) {
 		console.log(info);
 		this.props.saveObject(info);
+		const isSaved = !this.state.isSaved;
+		this.setState({isSaved});
 	}
 
 	showMore(info) {
 		this.props.showMore(info);
 	}
 
+	showImgFunc() {
+		const img = this.props.info.userImg
+		this.props.showImg(img);
+	}
+
+
 
 
 	render() {
 		//this.props.info for name and link stuff
 		const info = this.props.info;
+		//const isSaved = info.saved || this.props.type === "saved";
 		//console.log(info);
 		return (
 			<div className="basicCardDetail">
 				<div className="avatarDiv">
 				{(this.props.type === "user") ?
-					<span><img alt={info.name} className="avatarImg" src={info.userImg}></img></span>
+					<span><img onClick={() => this.showImgFunc()} alt={info.name} className="avatarImg" src={info.userImg}></img></span>
 					:null}
 				</div>
 				<div className="cardMain cardInfoBasic">
@@ -51,7 +61,7 @@ class CardBasic extends Component {
 							<button className="cardButton">LOADING</button> :
 							<button className="cardButton" onClick={() => this.showMore(info)}>Show More</button>
 						}
-						<button className="cardButton" onClick={() => this.saveObject(info)}>Save</button>
+						<button className={"cardButton" + (this.state.isSaved ? " saved" : "")} onClick={() => this.saveObject(info)}>{this.state.isSaved ? "Saved" : "Save"}</button>
 					</div>
 				</div>
 				<div className="bottomDiv"></div>

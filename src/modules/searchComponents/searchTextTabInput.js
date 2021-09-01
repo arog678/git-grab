@@ -48,7 +48,7 @@ class SearchTextInput extends Component {
 		let textSearchButtonClass = false ? "textSearchIcon searchButtonAlt" : "textSearchIcon";
 		const searchButtonClass = this.props.alt ? "searchButtonAlt" : "textSearchButton";
 		return (
-			<div className="searchComponentDiv altFull">
+			<div className={"searchComponentDiv altFull"+(this.props.isMainDiv ? " isMain" : "")}>
 				<div className="textInputDiv">
 					<input value={this.state.textInput} 
 					onKeyPress={(e) => this.handleKeyPress(e)}

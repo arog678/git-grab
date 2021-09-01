@@ -32,6 +32,7 @@ export function trimProjectData(projectResponseText) {
 			released: "2008",
 			desc: data.short_description,
 			decsLong: data.description,
+			saved: false,
 			//userImg: data.owner.avatar_url,
 			//userName: data.owner.login,
 			//userLink: data.owner.html_url,
@@ -51,7 +52,8 @@ export function trimUserData(userResponseText) {
 			name: data.login,
 			url: data.html_url,
 			userImg: data.avatar_url,
-			type: "user"
+			type: "user",
+			saved: false
 		
 		};
 		projectData.push(trimmedData);

@@ -13,6 +13,7 @@ import FooterContact from "./footerContact";
 import "./style/mainStyle.css";
 import LargeSearchBox from "./searchComponents/largeSearchBox";
 import "./style/homePage.css";
+import {isMobile} from 'react-device-detect';
 
 class HomePage extends Component {
 	
@@ -174,14 +175,16 @@ class HomePage extends Component {
 		//MUST USE ROUTES HERE
 		//<RecentSearchSelect recentSearches={this.state.recentSearches} history={this.props.history} tab={this.state.currentTab} searchSaved={(savedOptions) => this.onNewSearch({savedOptions})}></RecentSearchSelect>
 		console.log(this.state.currentTab);
+		
 		return (
 			<div >
 				<div id="wrap">
 					<div id="mainContent">
 
 						<TopHeader history={this.props.history}></TopHeader>
-						<div>
-							<LargeSearchBox history={this.props.history}></LargeSearchBox>
+						<div><h2 className="recentSearchTitle">Home</h2></div>
+						<div class="largeBoxContainer">
+							<LargeSearchBox isMainDiv={isMobile} history={this.props.history}></LargeSearchBox>
 						</div>
 						<div><h2 className="recentSearchTitle">Recent Searches</h2></div>
 						<div className="recentSearchContainer">

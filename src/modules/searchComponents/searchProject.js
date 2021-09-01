@@ -64,7 +64,7 @@ class SearchProject extends Component {
 		//this.props.searchRequest(this.generateRequest());
 		const requestParams = this.generateRequest();
 		if (requestParams !== "?") {
-			const currentPath = this.props.history.location.pathname;
+			const currentPath = this.props.history.location.pathname; //redundant project will always shw projexct
 			const newPath = currentPath + requestParams;
 			pushProjectSearchData(this.searchTextRef.current.getTextInput(), requestParams);
 			this.props.history.push(newPath);

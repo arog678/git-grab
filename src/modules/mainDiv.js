@@ -11,6 +11,12 @@ import { queryMain } from "./utils/handleQuery";
 import RecentSearchSelect from "./recentSearchSelect";
 import FooterContact from "./footerContact";
 import "./style/mainStyle.css";
+import LargeSearchBox from "./searchComponents/largeSearchBox";
+import {isMobile} from 'react-device-detect';
+
+
+//for resizing
+//https://stackoverflow.com/questions/36862334/get-viewport-window-height-in-reactjs
 
 class MainDiv extends Component {
 	
@@ -18,23 +24,33 @@ class MainDiv extends Component {
 		super(props);
 		console.log(props.history.location);
 		console.log(props.history.location.pathname);
+		let currentTab = this.props.history.location.pathname.slice(1);
+		if (currentTab === "topic") currentTab = "project";
 		//const params = new URLSearchParams(props.history.location.search);
 		this.state = {
-			currentTab: this.props.history.location.pathname.slice(1),
+			currentTab,
 			gitResponse: null,
 			currentPage: 1,
 			searchParams: {},
 			urlDict: {},
 			lastPage: 1,
+			totalCount: 0,
 			recentSearches: [],
 			currentTextSearch: "",
-			loading: false
+			loading: true,
+			prevUrl: ""
 			//tabData: {},
 		};
+
+		this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
 		
 	}
 
 	async componentDidMount() { //FIX THIS //componentWillMount
+		this.updateWindowDimensions();
+		window.addEventListener('resize', this.updateWindowDimensions);
+
+
 		this.unlisten = this.props.history.listen(async (location, action) => {
 			if (location.pathname === "/") return;
 			console.log("MOVE");
@@ -52,6 +68,16 @@ class MainDiv extends Component {
 		}
 	}
 
+
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.updateWindowDimensions);
+	}
+
+	updateWindowDimensions() {
+		console.log("DIM");
+		this.setState({ width: parseInt(window.innerWidth), height: parseInt(window.innerHeight) });
+	}
+
 	async getQuery() {
 		this.setState({loading: true}); 
 		console.log("on route change");
@@ -59,7 +85,8 @@ class MainDiv extends Component {
 		//const params = new URLSearchParams(this.props.history.location.pathname);
 		let propParam = this.props.history.location.search;
 		console.log(propParam);
-		const tabCheck = this.props.history.location.pathname.slice(1);
+		let tabCheck = this.props.history.location.pathname.slice(1);
+		if (tabCheck === "topic") tabCheck = "project"; //topic name fix
 		if ((propParam === undefined || propParam === "") && (tabCheck !== "saved")) {
 			if (this.state.currentTab !== tabCheck) {
 				//const tabData = this.state.tabData;
@@ -75,6 +102,7 @@ class MainDiv extends Component {
 		}
 		console.log("ahsid");
 		console.log(this.state.currentTab);
+		
 		const queryRes = await queryMain(propParam, tabCheck === "saved" ? "saved" : this.state.currentTab);
 		console.log(queryRes);
 		const params = new URLSearchParams(propParam);
@@ -96,6 +124,7 @@ class MainDiv extends Component {
 
 		this.setState({
 			gitResponse: queryRes.items,
+			totalCount: queryRes.resp.total_count,
 			currentPage, 
 			loading: false,
 			lastPage,
@@ -199,6 +228,7 @@ class MainDiv extends Component {
 			currentTab: tab,
 			gitResponse: response.items,
 			currentPage, 
+			totalCount,
 			lastPage,
 			loading: false, 
 			urlDict,
@@ -237,7 +267,19 @@ class MainDiv extends Component {
 		loadSaved({users: true, projects: true, textSearch: "tetris"});
 	}
 
+	//newTabChange() {
+	//	const hist = this.props.history
+	//	if (hist.pathname === "/saved") {
+	//		this.props.history.push(this.state.lastUrl);
+	//	} else {
+	//		const lastUrl = hist.pathname + hist.search;
+	//		this.setState({lastUrl});
+	//	}
+	//	
+	//}
+
 	getMainSearchContent() {
+		
 		if (this.state.loading) return (<div>Requesting Data</div>);
 		else if (this.state.gitResponse !== null) {
 			return (<div>
@@ -266,8 +308,18 @@ class MainDiv extends Component {
 					<div id="mainContent">
 
 						<TopHeader history={this.props.history}></TopHeader>
-						<TopTabs history={this.props.history} currentTab={this.state.currentTab} tabChange={(tab) => this.onNewSearch({tab})}></TopTabs>
-						<SearchHeader textSearch={this.state.currentTextSearch} history={this.props.history} tab={this.state.currentTab} searchSaved={(savedOptions) => this.onNewSearch({savedOptions})} newSearch={(url) => this.onNewSearch({url})}></SearchHeader>
+						{!isMobile ? 
+							<div class="largeBoxHolder">
+								<LargeSearchBox isMainDiv={true} history={this.props.history}></LargeSearchBox>
+							</div> :
+							<SearchHeader textSearch={this.state.currentTextSearch} 
+							history={this.props.history} tab={this.state.currentTab} 
+							searchSaved={(savedOptions) => this.onNewSearch({savedOptions})} 
+							newSearch={(url) => this.onNewSearch({url})}></SearchHeader>
+
+						}
+							
+						<TopTabs totalResults={this.state.totalCount} history={this.props.history} currentTab={this.state.currentTab} tabChange={(tab) => this.onNewSearch({tab})}></TopTabs>
 						{mainSearchContent}
 					</div>
 

@@ -32,6 +32,12 @@
 
 }
 
+@media (max-width: 700px) {
+	.HeaderDiv{
+		margin-bottom: 0;
+	}
+}
+
 .styleButtonsDiv{
 	display: inline-block;
     float: right;

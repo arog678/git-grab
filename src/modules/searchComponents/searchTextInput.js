@@ -41,7 +41,7 @@ class SearchTextInput extends Component {
 
 	render() {
 		return (
-			<div className="searchComponentDiv">
+			<div className="searchComponentDiv mobileGap">
 				<div className="textInputDiv">
 					<input value={this.state.textInput} 
 					onKeyPress={(e) => this.handleKeyPress(e)}

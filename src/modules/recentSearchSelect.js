@@ -61,7 +61,7 @@ class RecentSearchSelect extends Component {
 
 		const dbName = dbRef[this.props.tab];
 		//if (this.props.tab !== "saved") {
-			const currentPath = this.props.history.location.pathname;
+			//const currentPath = this.props.history.location.pathname;
 			const newPath = "/" + this.props.tab + "?textSearch=" + item.textSearch;
 			pushSearchData(item.textSearch, item.otherInfo, dbName);
 			console.log(newPath);
