@@ -2,9 +2,7 @@ export async function getHttpRequest(url, type) {
 	return new Promise((res) => {
 		
 	fetch(url, {headers: {
-		//'Content-Type': 'application/json'
 		"Accept": "application/vnd.github.mercy-preview+json"
-		// 'Content-Type': 'application/x-www-form-urlencoded',
 	  }})
 	.then(async response => {
 		const resp = await response.json();
@@ -14,7 +12,6 @@ export async function getHttpRequest(url, type) {
 			res(trimUserData(resp));
 		}
 	})
-	//.then(data => console.log(data));
   
 
 	});

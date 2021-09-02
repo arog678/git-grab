@@ -22,10 +22,7 @@ class RecentSearchSelect extends Component {
 	}
 
 	async componentDidMount() {
-		console.log("MOUNTED");
 		this.unlisten = this.props.history.listen(async (location, action) => {
-			//if (this.ta)
-			//this.fillRecentSearches();
 		});
 		//run after construct
 		this.fillRecentSearches();
@@ -51,8 +48,6 @@ class RecentSearchSelect extends Component {
 	}
 
 	searchText(item) {
-			//this.props.searchRequest(this.generateRequest());
-		console.log(this.props.tab);
 		const dbRef = {
 			"project": "recentProjectSearches",
 			"user": "recentUserSearches",
@@ -60,18 +55,9 @@ class RecentSearchSelect extends Component {
 		};
 
 		const dbName = dbRef[this.props.tab];
-		//if (this.props.tab !== "saved") {
-			//const currentPath = this.props.history.location.pathname;
 			const newPath = "/" + this.props.tab + "?textSearch=" + item.textSearch;
 			pushSearchData(item.textSearch, item.otherInfo, dbName);
-			console.log(newPath);
 			this.props.history.push(newPath);
-		//} else {
-		//	pushSearchData(item.textSearch, item.otherInfo, dbName);
-		//	//this.props.savedRequest({userText: item.textSearch});
-		//	this.props.savedRequest({userText: item.textSearch});
-	//
-		//}
 	}
 
 	getRecentSearchesList() {
@@ -96,8 +82,6 @@ class RecentSearchSelect extends Component {
 
 
 	render() {
-		console.log("RERENDER");
-		console.log(this.state.recentSearches)
 		const recent = this.props.recentSearches;
 		const recentValid = recent.length !== undefined && recent.length !== 0;
 		const recentSearchesList = this.getRecentSearchesList();

@@ -9,16 +9,12 @@ class SearchProject extends Component {
 	
 	constructor(props) {
 		super(props);
-		console.log(props);
 
 		const params = new URLSearchParams(props.history.location.search);
 		this.textSearch = params.get("textSearch");
 		this.featured = params.get("featured");
 		this.nameSort = params.get("nameSort");
 		this.createdAtSort = params.get("createdAtSort");
-		//featured=true&nameSort=2&createdAtSort=1
-
-		console.log(this.textSearch);
 
 		this.state = {};
 		this.searchTextRef = React.createRef();
@@ -37,9 +33,7 @@ class SearchProject extends Component {
 	}
 
 	generateRequest() {
-
 		const searchParams = this.getCurrentSearchParams();
-
 		const urlStringList = [];
 
 		
@@ -61,7 +55,6 @@ class SearchProject extends Component {
 	}
 
 	searchProjects() {
-		//this.props.searchRequest(this.generateRequest());
 		const requestParams = this.generateRequest();
 		if (requestParams !== "?") {
 			const currentPath = this.props.history.location.pathname; //redundant project will always shw projexct
@@ -70,15 +63,6 @@ class SearchProject extends Component {
 			this.props.history.push(newPath);
 		}
 	}
-
-	testRequest() {
-		console.log(this.props);
-		console.log(this.generateRequest());
-		const query = this.generateRequest();
-		this.props.history.push(query);
-
-	}
-
 
 	render() {
 

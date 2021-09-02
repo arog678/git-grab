@@ -1,3 +1,10 @@
+//this is a general look at how continuing the project would like
+//what if instead of implementing 2 searches all of them were implemented
+//this is the general template for how that would work
+
+//General template will be used more of as a builder function
+//These are whats used as sort of templates
+
 const tabName = "project";
 
 const searchItems = "";
@@ -55,6 +62,43 @@ const queryItems = {
 	}
 
 }
+
+function basicDataCard(data) {
+	return {
+		img: {
+			show: true,
+			url: ["owner", "userImg"], //this is worng
+			expand: false, //may implement in the future
+			//size?
+		},
+		title: {
+			show: true,
+			content: <span><a href={data.url}>{data.name}</a><a href={data.owner.url}>{data.owner.name}</a></span>,
+		},
+		desc: {
+			show: true,
+			content: <span>{data.desc}</span>,
+		}
+	};
+}
+
+function dataCardDetailed(data) {
+	return [
+		{titile: "id", id:"id", content: <span>data.name</span>, show: false},
+		{titile: "Name", id:"name", content: <span>(data.display_name === null ? data.name : data.display_name)</span>, show: true},
+		{titile: "Url", id:"url", content: <span>"https://github.com/" + urlName + "/" + data.name</span>, show: true},
+		{titile: "Created At", id:"createdAt", content: <span>data.created_at</span>, show: true},
+		{titile: "Updated At", id:"updatedAt", content: <span>data.updated_at</span>, show: true},
+		{titile: "Released", id:"released", content: <span>data.released</span>, show: true},
+		{titile: "Description", id:"desc", content: <span>data.desc</span>, show: true},
+		{title: "User-Name", id: "userName", content: <span>data.owner.login</span>, show: true},
+		{title: "User-Link", id: "userLink", content: <span>data.owner.html_url</span>, show: true},
+		{title: "UserImg", id: "userImg", content: <span>data.owner.avatar_url</span>, show: true},
+		{titile: "Saved", id:"saved", content: false, show: false},
+		{titile: "type", id:"type", content: "project", show: false},
+	];
+}
+
 
 //const 
 

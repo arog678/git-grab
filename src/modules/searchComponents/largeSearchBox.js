@@ -123,14 +123,6 @@ class LargeSearchBox extends Component {
 		}
 	}
 
-	testRequest() {
-		console.log(this.props);
-		console.log(this.generateRequest());
-		const query = this.generateRequest();
-		this.props.history.push(query);
-
-	}
-
 	tabChangeState(tab) {
 		this.setState({tab});
 	}

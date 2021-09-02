@@ -13,7 +13,7 @@ import FooterContact from "./footerContact";
 import "./style/mainStyle.css";
 import LargeSearchBox from "./searchComponents/largeSearchBox";
 import {isMobile} from 'react-device-detect';
-
+import pushSearchData from "./utils/savingUtil";
 
 //for resizing
 //https://stackoverflow.com/questions/36862334/get-viewport-window-height-in-reactjs
@@ -22,11 +22,8 @@ class MainDiv extends Component {
 	
 	constructor(props) {
 		super(props);
-		console.log(props.history.location);
-		console.log(props.history.location.pathname);
 		let currentTab = this.props.history.location.pathname.slice(1);
 		if (currentTab === "topic") currentTab = "project";
-		//const params = new URLSearchParams(props.history.location.search);
 		this.state = {
 			currentTab,
 			gitResponse: null,
@@ -39,11 +36,8 @@ class MainDiv extends Component {
 			currentTextSearch: "",
 			loading: true,
 			prevUrl: ""
-			//tabData: {},
 		};
-
 		this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-		
 	}
 
 	async componentDidMount() { //FIX THIS //componentWillMount
@@ -53,7 +47,6 @@ class MainDiv extends Component {
 
 		this.unlisten = this.props.history.listen(async (location, action) => {
 			if (location.pathname === "/") return;
-			console.log("MOVE");
 			this.getQuery();
 		});
 		//run after construct
@@ -70,28 +63,21 @@ class MainDiv extends Component {
 
 
 	componentWillUnmount() {
+		this.unlisten();
 		window.removeEventListener('resize', this.updateWindowDimensions);
 	}
 
 	updateWindowDimensions() {
-		console.log("DIM");
 		this.setState({ width: parseInt(window.innerWidth), height: parseInt(window.innerHeight) });
 	}
 
 	async getQuery() {
 		this.setState({loading: true}); 
-		console.log("on route change");
-		console.log("componentDidMount");
-		//const params = new URLSearchParams(this.props.history.location.pathname);
 		let propParam = this.props.history.location.search;
-		console.log(propParam);
 		let tabCheck = this.props.history.location.pathname.slice(1);
 		if (tabCheck === "topic") tabCheck = "project"; //topic name fix
 		if ((propParam === undefined || propParam === "") && (tabCheck !== "saved")) {
 			if (this.state.currentTab !== tabCheck) {
-				//const tabData = this.state.tabData;
-				//tabData[this.state.currentTab] = this.
-				console.log("TAB CHECK");
 				const recentSearches = await this.fillRecentSearches(tabCheck);
 				this.setState({loading: false, currentTab: tabCheck, gitResponse: null, recentSearches});
 			}
@@ -100,11 +86,8 @@ class MainDiv extends Component {
 			propParam = "?textSearch=";
 			this.setState({currentTab: tabCheck});
 		}
-		console.log("ahsid");
-		console.log(this.state.currentTab);
 		
 		const queryRes = await queryMain(propParam, tabCheck === "saved" ? "saved" : this.state.currentTab);
-		console.log(queryRes);
 		const params = new URLSearchParams(propParam);
 
 		const totalCount = Math.min(queryRes.resp.total_count, 1000); //can only display first 1000
@@ -118,7 +101,6 @@ class MainDiv extends Component {
 			currentPage = lastPage;
 		}
 
-		console.log("currentPage", currentPage)
 
 		const currentTextSearch = params.get("textSearch");
 
@@ -130,22 +112,7 @@ class MainDiv extends Component {
 			lastPage,
 			currentTextSearch,
 		});
-	}
-
-	componentWillUnmount() {
-		this.unlisten();
-	}
-  
-	moveToNewTab(tab) {
-		//OBSELETE
-		this.setState = {
-			currentTab: tab,
-			//gitResponse: {},
-			currentPage: 1,
-			//searchParams: {}
-			
-		};
-	}	
+	}  
 
 	async onNewSearch(options) {
 		console.log(options);
@@ -157,46 +124,33 @@ class MainDiv extends Component {
 		if (options.tab !== undefined && options.tab !== null) {
 			currentPage = 1;
 			tab = options.tab;		
-			//urlDict[tab] = url; //should it work like this?
 		}
 
 		if (options.url !== undefined && options.url !== null) {
 			currentPage = 1;
-			//tab = options.tab;		
 			urlDict[tab] = options.url;
 		}
 
 		let url = urlDict[tab] !== undefined ? urlDict[tab] : null;
 
-		console.log(options);
 		if (options.page !== undefined && options.page !== null && tab !== "saved") {
 			currentPage = options.page;
-			//tab = options.tab;		
 			url += "&page=" + options.page;
 		}
 
-		//url
-		//tab
-		//page
-
 		if (url === null && tab !== "saved") {
-			
 			if (tab !== this.state.currentTab) {
 				this.setState({currentTab: tab});
 			}
-			console.log("FAILED");
 			return
 		};
 
 		if (tab === "saved" && options.savedOptions !== undefined) {
 			savedOptions = options.savedOptions;
-			console.log(savedOptions);
 		} else if (tab === "saved" && savedOptions === undefined && options.savedOptions === undefined) {
 			this.setState({currentTab: "saved"});
 			return;
 		}
-		console.log("HERE");
-
 
 		let response;
 		if (tab === "saved" && savedOptions !== undefined) {
@@ -206,23 +160,14 @@ class MainDiv extends Component {
 			response = await getHttpRequest(url, tab);
 		}
 		
-		//const response = await getHttpRequest(url, tab);
-		console.log(response);
-		//const searchParams = this.state.searchParams;
-		//searchParams[this.state.currentTab] = params
 		//need to save params
 		const totalCount = Math.min(response.resp.total_count, 1000); //can only display first 1000
 		const perPage = 30; //30 by default
-		console.log(response);
 		const lastPage = Math.ceil(totalCount / perPage);		
 
 		if (lastPage < currentPage) {
 			currentPage = lastPage;
 		}
-		console.log(currentPage);
-
-
-
 
 		this.setState({
 			currentTab: tab,
@@ -246,37 +191,6 @@ class MainDiv extends Component {
 		return recentSearches;
 	}
 
-	pageMove() {
-
-	}
-
-	toastTest() {
-		console.log(this.toastContainer);
-		this.toastContainer.success(`hi! Now is `, `///title\\\\\\`, {
-			closeButton: true,
-		  });
-	}
-
-	testLoad() {
-		console.log(this.props);
-		const params = new URLSearchParams(this.props.location.search);
-		const tab = params.get('tab');
-		console.log(tab);
-
-		loadSaved({users: true, projects: true, textSearch: "tetris"});
-		loadSaved({users: true, projects: true, textSearch: "tetris"});
-	}
-
-	//newTabChange() {
-	//	const hist = this.props.history
-	//	if (hist.pathname === "/saved") {
-	//		this.props.history.push(this.state.lastUrl);
-	//	} else {
-	//		const lastUrl = hist.pathname + hist.search;
-	//		this.setState({lastUrl});
-	//	}
-	//	
-	//}
 
 	getMainSearchContent() {
 		
@@ -284,21 +198,36 @@ class MainDiv extends Component {
 		else if (this.state.gitResponse !== null) {
 			return (<div>
 				<GitCardList gitInfo={this.state.gitResponse}></GitCardList>
-				<PageTrack history={this.props.history} currentPage={this.state.currentPage} lastPage={this.state.lastPage} pageMove={(page) => this.onNewSearch({page})}></PageTrack>
+				<PageTrack history={this.props.history} currentPage={this.state.currentPage} lastPage={this.state.lastPage}></PageTrack>
 			</div>);
 
 		} else {
 			return (<div>
 			<div><h2 className="recentSearchTitle">Recent Searches</h2></div>
-				<RecentSearchSelect key="recentSearchBox" recentSearches={this.state.recentSearches} history={this.props.history} tab={this.state.currentTab} searchSaved={(savedOptions) => this.onNewSearch({savedOptions})}></RecentSearchSelect>
+				<RecentSearchSelect key="recentSearchBox" recentSearches={this.state.recentSearches} history={this.props.history} tab={this.state.currentTab}></RecentSearchSelect>
 			</div>);
+		}
+	}
+
+	searchGit() {
+		//this.props.searchRequest(this.generateRequest());
+		const requestParams = this.getSearchURL();
+		const tabDict = {
+			"project": "recentProjectSearches",
+			"user": "recentUserSearches",
+			"saved": "recentSavedSearches"
+		};
+		if (requestParams !== "?") {
+			//const currentPath = this.props.history.location.pathname;
+			const newPath = this.state.tab + requestParams;
+			pushSearchData(this.searchTextRef.current.getTextInput(), requestParams, tabDict[this.state.tab]);
+			this.props.history.push(newPath);
 		}
 	}
 
 	render() {
 		//https://reactrouter.com/web/guides/quick-start
 		//MUST USE ROUTES HERE
-		console.log(this.state.currentTab);
 		
 
 		const mainSearchContent = this.getMainSearchContent();
@@ -316,10 +245,9 @@ class MainDiv extends Component {
 							history={this.props.history} tab={this.state.currentTab} 
 							searchSaved={(savedOptions) => this.onNewSearch({savedOptions})} 
 							newSearch={(url) => this.onNewSearch({url})}></SearchHeader>
-
 						}
 							
-						<TopTabs totalResults={this.state.totalCount} history={this.props.history} currentTab={this.state.currentTab} tabChange={(tab) => this.onNewSearch({tab})}></TopTabs>
+						<TopTabs totalResults={this.state.totalCount} history={this.props.history} currentTab={this.state.currentTab}></TopTabs>
 						{mainSearchContent}
 					</div>
 

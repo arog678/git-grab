@@ -10,7 +10,6 @@ class SearchSortButton extends Component {
 			name: this.props.name,
 			sortID: ((si !== undefined && si !== null && si !== "undefined") ? parseInt(si) : 0)
 		};
-		console.log((si !== undefined), (si !== null), si, this.state.sortID);
 	}
 
 	changeSort() {

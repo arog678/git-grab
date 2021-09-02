@@ -57,31 +57,24 @@ class PageTrack extends Component {
 			"last": this.props.lastPage
 		}
 		const pageNum = pageDict[moveRef];
-		console.log(pageNum, this.props.lastPage)
 		let path = this.props.history.location.search
 
 		if (paramPage !== undefined && paramPage !== null) {
 			const pageOld = "&page=" + paramPage;
 			const pageNew = "&page=" + pageNum;
-			console.log({pageOld, pageNew});
 			path = path.replace(pageOld, pageNew);
 		} else {
 			const pageNew = "&page=" + pageNum;
 			path = path + pageNew;
 		}
-		console.log(path)
 		window.scrollTo(0, 0);
 
 		this.props.history.push(path);
 		
-
 	}
 
 
-
-
 	render() {
-		const pageItems = [];
 		const currentPage = this.props.currentPage;
 		const lastPage = this.props.lastPage;
 
@@ -89,13 +82,6 @@ class PageTrack extends Component {
 		const atEnd = this.atEnd();
 		const turnBackClass = atStart ? "pageButton disableClick" : "pageButton";
 		const turnNextClass = atEnd ? "pageButton disableClick" : "pageButton";
-		console.log(turnNextClass, atEnd, currentPage, lastPage);
-
-		//pageItems.push(<div onClick={() => this.movePage("first")} className={turnBackClass}>First</div>);
-		//pageItems.push(<div onClick={() => this.movePage("prev")} className={turnBackClass}>Prev</div>);
-		//pageItems.push(<div className="pageButton">{currentPage}/{lastPage}</div>);
-		//pageItems.push(<div onClick={() => this.movePage("next")} className={turnNextClass}>Next</div>);
-		//pageItems.push(<div onClick={() => this.movePage("last")} className={turnNextClass}>Last</div>);
 
 		
 		return (

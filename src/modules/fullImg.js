@@ -8,7 +8,6 @@ class FullImg extends Component {
 	}
 	
 	closeImg = e => {
-		console.log("CLOSE STOP");
 		e.stopPropagation();  //  <------ Here is the magic
 		//this.props.closeAboutSignal();
 	}

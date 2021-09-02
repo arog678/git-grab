@@ -40,16 +40,13 @@ class GitCardList extends Component {
 		if (type === "user") {
 			newData = await getUserDetails(item.name, type);
 		} else {
-			console.log(item);
 			//COMPLICATED API HANG UP HERE
 			//WILL JUST USE OBJECT AS WORK AROUND
 			//newData = await getProjectDetails(item.id, type);
 			newData = item;
 		}
-		console.log(newData);
 		const extraInfo = this.state.extraInfo;
 		extraInfo[item.id] = newData;
-		console.log(1)
 		this.setState({extraInfo});
 
 	}
@@ -65,7 +62,6 @@ class GitCardList extends Component {
 				this.addExtraInfo(item, type);
 			}
 		}
-		console.log(2)
 		this.setState({openDict});
 	}
 
@@ -80,7 +76,6 @@ class GitCardList extends Component {
 	//mountcomponent stuff here
 
 	async saveObject(info, type) {
-		console.log(saveItem);
 		if (this.props.type === "saved") {
 			const dbItem = await db.savedItems.get({itemId: info.id});
 			const promiseArray = [];
@@ -95,15 +90,11 @@ class GitCardList extends Component {
 		//use this to double check status in db iteself not children
 		const isSaved = dbItem !== undefined && dbItem !== null;
 
-		console.log(info)
 		if (isSaved) {
-			//const dbItem = await db.savedItems.get({itemId: info.id});
-			console.log(dbItem);
 			const promiseArray = [];
 			promiseArray.push(db[type].delete(info.id));
 			promiseArray.push(db.savedItems.delete(dbItem.id));
 			await Promise.all(promiseArray);
-			//this.deleteNotifiction();
 		
 		} else {
 			await saveItem(info, type);
@@ -113,24 +104,19 @@ class GitCardList extends Component {
 
 
 	savedNotification() {
-		console.log(3)
 		this.setState({showSaved: true, notificationText: "Saved!"});
 			clearTimeout(this.notificationTimeout);
 			this.notificationTimeout = setTimeout(() => {
-				console.log(4)
 				this.setState({showSaved: false});
 			}, 2000);
 	}
 
 	openFullImg(userImg) {
-		console.log(userImg);
-		console.log(5)
 		//this.setState({userImg, openImg: true})
 		//THIS WILL BE DISABLED BY DEFAULT
 	}
 
 	closeFullImg() {
-		console.log(6)
 		this.setState({openImg: false})
 	}
 

@@ -32,7 +32,6 @@ class HomePage extends Component {
 
 	async componentDidMount() { //FIX THIS //componentWillMount
 		this.unlisten = this.props.history.listen(async (location, action) => {
-			//console.log("MOVE");
 			//this.getQuery();
 		});
 		//run after construct
@@ -59,7 +58,6 @@ class HomePage extends Component {
 	}	
 
 	async onNewSearch(options) {
-		console.log(options);
 		let currentPage = this.state.currentPage;
 		let tab = this.state.currentTab;
 		let urlDict = this.state.urlDict;
@@ -79,10 +77,8 @@ class HomePage extends Component {
 
 		let url = urlDict[tab] !== undefined ? urlDict[tab] : null;
 
-		console.log(options);
 		if (options.page !== undefined && options.page !== null && tab !== "saved") {
 			currentPage = options.page;
-			//tab = options.tab;		
 			url += "&page=" + options.page;
 		}
 
@@ -95,18 +91,15 @@ class HomePage extends Component {
 			if (tab !== this.state.currentTab) {
 				this.setState({currentTab: tab});
 			}
-			console.log("FAILED");
 			return
 		};
 
 		if (tab === "saved" && options.savedOptions !== undefined) {
 			savedOptions = options.savedOptions;
-			console.log(savedOptions);
 		} else if (tab === "saved" && savedOptions === undefined && options.savedOptions === undefined) {
 			this.setState({currentTab: "saved"});
 			return;
 		}
-		console.log("HERE");
 
 
 		let response;
@@ -117,20 +110,14 @@ class HomePage extends Component {
 			response = await getHttpRequest(url, tab);
 		}
 		
-		//const response = await getHttpRequest(url, tab);
-		console.log(response);
-		//const searchParams = this.state.searchParams;
-		//searchParams[this.state.currentTab] = params
 		//need to save params
 		const totalCount = Math.min(response.resp.total_count, 1000); //can only display first 1000
 		const perPage = 30; //30 by default
-		console.log(response);
 		const lastPage = Math.ceil(totalCount / perPage);		
 
 		if (lastPage < currentPage) {
 			currentPage = lastPage;
 		}
-		console.log(currentPage);
 
 
 
@@ -151,7 +138,6 @@ class HomePage extends Component {
 		promiseArray.push(db.recentSavedSearches.toArray());
 
 		const [project, user, saved] = await Promise.all(promiseArray);
-		console.log(project, user, saved);
 
 		return {project, user, saved};
 	}
@@ -161,10 +147,8 @@ class HomePage extends Component {
 	}
 
 	testLoad() {
-		console.log(this.props);
 		const params = new URLSearchParams(this.props.location.search);
 		const tab = params.get('tab');
-		console.log(tab);
 
 		loadSaved({users: true, projects: true, textSearch: "tetris"});
 		loadSaved({users: true, projects: true, textSearch: "tetris"});
@@ -174,7 +158,6 @@ class HomePage extends Component {
 		//https://reactrouter.com/web/guides/quick-start
 		//MUST USE ROUTES HERE
 		//<RecentSearchSelect recentSearches={this.state.recentSearches} history={this.props.history} tab={this.state.currentTab} searchSaved={(savedOptions) => this.onNewSearch({savedOptions})}></RecentSearchSelect>
-		console.log(this.state.currentTab);
 		
 		return (
 			<div >

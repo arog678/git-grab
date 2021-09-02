@@ -11,7 +11,6 @@ class SearchTextInput extends Component {
 	}
 
 	changeTextInput(event) {
-		//console.log(event);
 		this.setState({textInput: event.target.value});
 	}
 
@@ -45,8 +44,6 @@ class SearchTextInput extends Component {
 
 
 	render() {
-		let textSearchButtonClass = false ? "textSearchIcon searchButtonAlt" : "textSearchIcon";
-		const searchButtonClass = this.props.alt ? "searchButtonAlt" : "textSearchButton";
 		return (
 			<div className={"searchComponentDiv altFull"+(this.props.isMainDiv ? " isMain" : "")}>
 				<div className="textInputDiv">

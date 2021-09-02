@@ -55,7 +55,6 @@ class SearchUser extends Component {
 	}
 
 	searchUsers() {
-		//this.props.searchRequest(this.generateRequest());
 		const requestParams = this.generateRequest();
 		if (requestParams !== "?") {
 			const currentPath = this.props.history.location.pathname; // redundant will alway how user

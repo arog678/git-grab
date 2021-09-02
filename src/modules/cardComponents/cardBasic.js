@@ -40,8 +40,6 @@ class CardBasic extends Component {
 	render() {
 		//this.props.info for name and link stuff
 		const info = this.props.info;
-		//const isSaved = info.saved || this.props.type === "saved";
-		//console.log(info);
 		return (
 			<div className="basicCardDetail">
 				<div className="avatarDiv">

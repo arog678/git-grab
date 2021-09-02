@@ -12,7 +12,6 @@ export async function saveItem(item, type) {
 	await db.savedItems.put(newItem);
 	await db[type].put(item);
 	return item;
-	//console.log("TOASTR")
 }
 
 export default async function pushSearchData(textSearch, params, type) {

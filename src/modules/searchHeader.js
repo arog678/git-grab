@@ -24,7 +24,7 @@ class SearchHeader extends Component {
 		let searchItem;
 		if (this.props.tab === "project") searchItem = <SearchProject history={this.props.history} type="project" searchRequest={(url) => this.newSearch(url)}></SearchProject>
 		if (this.props.tab === "user") searchItem = <SearchUser history={this.props.history} type="user" searchRequest={(url) => this.newSearch(url)}></SearchUser>
-		if (this.props.tab === "saved") searchItem = <SearchSaved history={this.props.history} type="saved" savedRequest={(options) => this.searchSaved(options)} searchRequest={(url) => this.newSearch(url)}></SearchSaved>
+		if (this.props.tab === "saved") searchItem = <SearchSaved history={this.props.history} type="saved" savedRequest={(options) => this.newSearch(options)} searchRequest={(url) => this.newSearch(url)}></SearchSaved>
 
 		return (
 			<div className="stickyParent">

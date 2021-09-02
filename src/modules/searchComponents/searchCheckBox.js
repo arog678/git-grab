@@ -20,9 +20,6 @@ class SearchCheckBox extends Component {
 		return this.state.checkValue;
 	}
 
-	checkChange() {
-
-	}
 
 
 	render() {
@@ -38,7 +35,6 @@ class SearchCheckBox extends Component {
 					<input checked={this.state.checkValue}
 					labelstyle={{color: 'white'}}
 					iconstyle={{fill: 'white'}}	
-					onChange={() => this.checkChange()}			  
 					name="textInput" className="textInput" type="checkbox"
 					></input>
 				</div>

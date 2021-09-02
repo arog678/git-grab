@@ -33,7 +33,6 @@ class CardExpandedUser extends Component {
 
 	showImgFunc() {
 		const img = this.props.info.userImg;
-		console.log("USER CLICK");
 		this.props.showImg(img);
 	}
 

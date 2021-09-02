@@ -20,7 +20,6 @@ class TopHeader extends Component {
 	}
 
 	closeAbout() {
-		console.log("CLOSE");
 		this.setState({showAbout: false});
 	}
 

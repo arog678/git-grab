@@ -13,7 +13,6 @@ class SearchTextInput extends Component {
 	}
 
 	changeTextInput(event) {
-		//console.log(event);
 		this.setState({textInput: event.target.value});
 	}
 

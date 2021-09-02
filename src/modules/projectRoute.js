@@ -49,10 +49,6 @@ class MainDiv extends Component {
 
 	
 	render() {
-		console.log(this.state.currentTab);
-		//tabChange
-		//searchSaved
-		///pageMove
 		return (
 			<div >
 				

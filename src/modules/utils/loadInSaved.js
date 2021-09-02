@@ -12,8 +12,6 @@ export default async function loadSaved(options) {
 
 	if (options.project === undefined) options["project"] = true;
 	if (options.user === undefined) options["user"] = true;
-	console.log(options);
-
 
 	const typeList = []
 	if (options.user) typeList.push("user");
@@ -21,17 +19,11 @@ export default async function loadSaved(options) {
 	options.textSearch = options.textSearch.toLowerCase();
 
 	const filterFunc = (i) => {
-		console.log(i);
 		if (!typeList.includes(i.type)) return false;
-		console.log(i);
 		if (!i.name.toLowerCase().includes(options.textSearch)) return false;
-		console.log(i);
 		return true
 	};
 
-	console.log(await db.savedItems.filter(filterFunc).toArray());
-	
-	console.log(await db.savedItems.where("type").anyOf(typeList).toArray());
 	let savedItems = await db.savedItems.filter(filterFunc).toArray();
 	
 	if (options.dateSaved === "asc") {
@@ -44,7 +36,6 @@ export default async function loadSaved(options) {
 		});
 	}
 
-	console.log(options, savedItems);
 
 	const pageSize = 30;
 	const len = savedItems.length;
@@ -56,14 +47,6 @@ export default async function loadSaved(options) {
 		currentPage = Math.max(Math.min(options.page, lastPage), 1); //temp fix to page = 0 bug
 		currentPageStart = (currentPage - 1) * pageSize;
 	}
-	//let currentPageLen = pageSize; //index = 30
-	//if ((currentPage * pageSize) > len) {
-	//	currentPageLen = len;
-	//}
-
-	console.log(options);
-	console.log(savedItems);
-	console.log(currentPageStart, pageSize);
 
 	const savedItemsOnPage = savedItems.slice(currentPageStart, pageSize);
 
@@ -72,19 +55,15 @@ export default async function loadSaved(options) {
 		return arr;
 	}, []);
 
-	console.log(idList);
-
 	let savedPage = [];
 
 	if (options.project) {
 		const projects = await db.project.where("id").anyOf(idList).toArray();
 		savedPage = savedPage.concat(projects);
-		console.log(projects);
 	}
 
 	if (options.user) {
 		const users = await db.user.where("id").anyOf(idList).toArray()
-		console.log(users)
 		savedPage = savedPage.concat(users);
 	}
 
