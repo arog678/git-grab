@@ -1,0 +1,10 @@
+1. Add recently searched feature
+2. fix style for buttons and stuff
+3. add fa icons
+4. remove page buttons when nothing there
+5. add text when nothing there
+6. fix colors
+7. add dark settings
+8. add drag up on headers
+9. style padding
+10. push to site or someything
