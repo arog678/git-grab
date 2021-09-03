@@ -10,7 +10,8 @@ class SearchSaved extends Component {
 		super(props);
 		const params = new URLSearchParams(props.history.location.search);
 		this.dateSaved = params.get("dateSaved");
-		this.project = params.get("project");
+		//this.project = params.get("topic");
+		this.project = params.get("topic");
 		this.user = params.get("user");
 
 		if (this.project === null || this.project === undefined) this.project = true;
@@ -52,7 +53,7 @@ class SearchSaved extends Component {
 
 		if (searchParams.repositorsSort !== "") urlStringList.push("repositorsSort=" + searchParams.repositorsSort);
 
-		if (searchParams.projectCheck !== "") urlStringList.push("projectCheck=" + searchParams.project);
+		if (searchParams.projectCheck !== "") urlStringList.push("topicCheck=" + searchParams.project);
 
 		if (searchParams.userCheck !== "") urlStringList.push("userCheck=" + searchParams.user);
 		

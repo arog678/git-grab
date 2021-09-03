@@ -1,13 +1,8 @@
 import { Component } from "react";
-import GitCardList from "./gitCardList";
-import PageTrack from "./pageTrack";
-import SearchHeader from "./searchHeader";
 import TopHeader from "./topHeader";
-import TopTabs from "./topTabs";
 import db from "./utils/database";
 import { getHttpRequest } from "./utils/getGitHttp";
 import  loadSaved  from "./utils/loadInSaved";
-import { queryMain } from "./utils/handleQuery";
 import RecentSearchSelect from "./recentSearchSelect";
 import FooterContact from "./footerContact";
 import "./style/mainStyle.css";
@@ -22,7 +17,7 @@ class HomePage extends Component {
 		//const params = new URLSearchParams(props.history.location.search);
 		this.state = {
 			recentSearchesDict: {
-				project: [], 
+				topic: [], 
 				user: [], 
 				saved: []
 			},
@@ -35,7 +30,6 @@ class HomePage extends Component {
 			//this.getQuery();
 		});
 		//run after construct
-		const params = new URLSearchParams(this.props.history.location.search);
 		const recentSearchesDict = await this.fillRecentSearches();
 		this.setState({recentSearchesDict});
 	}
@@ -137,22 +131,15 @@ class HomePage extends Component {
 		promiseArray.push(db.recentUserSearches.toArray());
 		promiseArray.push(db.recentSavedSearches.toArray());
 
-		const [project, user, saved] = await Promise.all(promiseArray);
+		const [topic, user, saved] = await Promise.all(promiseArray);
 
-		return {project, user, saved};
+		return {topic, user, saved};
 	}
 
 	pageMove() {
 
 	}
 
-	testLoad() {
-		const params = new URLSearchParams(this.props.location.search);
-		const tab = params.get('tab');
-
-		loadSaved({users: true, projects: true, textSearch: "tetris"});
-		loadSaved({users: true, projects: true, textSearch: "tetris"});
-	}
 
 	render() {
 		//https://reactrouter.com/web/guides/quick-start
@@ -166,8 +153,8 @@ class HomePage extends Component {
 
 						<TopHeader history={this.props.history}></TopHeader>
 						<div><h2 className="recentSearchTitle">Home</h2></div>
-						<div class="largeBoxContainer">
-							<LargeSearchBox isMainDiv={isMobile} history={this.props.history}></LargeSearchBox>
+						<div className="largeBoxContainer">
+							<LargeSearchBox tabInput={"topic"} isMainDiv={isMobile} history={this.props.history}></LargeSearchBox>
 						</div>
 						<div><h2 className="recentSearchTitle">Recent Searches</h2></div>
 						<div className="recentSearchContainer">
@@ -175,9 +162,9 @@ class HomePage extends Component {
 								<div className="recentSearchBox">
 									<div className="recentSectionTitle"><span>Topics</span></div>
 									<RecentSearchSelect 
-									key="topicRecent"
-									recentSearches={this.state.recentSearchesDict["project"]} 
-									history={this.props.history} tab="project" 
+									key="projectRecent"
+									recentSearches={this.state.recentSearchesDict["topic"]} 
+									history={this.props.history} tab="topic" 
 									searchSaved={(savedOptions) => this.onNewSearch({savedOptions})} 
 									small={true}></RecentSearchSelect>
 								</div>

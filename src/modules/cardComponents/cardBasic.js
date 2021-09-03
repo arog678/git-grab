@@ -19,7 +19,6 @@ class CardBasic extends Component {
 	}
 
 	saveObject(info) {
-		console.log(info);
 		this.props.saveObject(info);
 		const isSaved = !this.state.isSaved;
 		this.setState({isSaved});

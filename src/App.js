@@ -1,17 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
-import MainDiv from './modules/mainDiv';
+import "./App.css";
+import MainDiv from "./modules/mainDiv";
 import HomePage from "./modules/homePage";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+import { faCheckSquare, faHome, faSave, faQuestionCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
+
 import {
-	BrowserRouter as Router,
 	Switch,
 	Route,
-	Link,
 	useHistory,
 	useLocation,
 	HashRouter,
 	Redirect
   } from "react-router-dom";
+
+  library.add(fab, faCheckSquare, faHome, faSave, faQuestionCircle, faSearch);
 
 
   function useQuery() {
@@ -30,7 +33,7 @@ function App() {
 			<Switch>
 			<Route exact path="/"><Redirect to="/home" /></Route>
 				<Route path="/home" history={history} component={HomePage}></Route>
-				<Route path="/project" history={history} tab="projects" component={MainDiv}/>
+				<Route path="/topic" history={history} tab="topic" component={MainDiv}/>
 				<Route path="/user" history={history} tab="user" component={MainDiv}/>
 				<Route path="/saved" history={history} tab="saved" component={MainDiv}/>
 				<Route path="/about" tab={query.get("tab")}>

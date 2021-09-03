@@ -6,7 +6,7 @@ export async function getHttpRequest(url, type) {
 	  }})
 	.then(async response => {
 		const resp = await response.json();
-		if (type === "project") {
+		if (type === "topic") {
 			res(trimProjectData(resp));
 		} else {
 			res(trimUserData(resp));
@@ -33,7 +33,7 @@ export function trimProjectData(projectResponseText) {
 			//userImg: data.owner.avatar_url,
 			//userName: data.owner.login,
 			//userLink: data.owner.html_url,
-			type: "project"
+			type: "topic"
 		};
 		projectData.push(trimmedData);
 	}
@@ -117,7 +117,7 @@ export function getProjectDetails(projectID) {
 				//userImg: data.owner.avatar_url,
 				//userName: data.owner.login,
 				//userLink: data.owner.html_url,
-				type: "project"
+				type: "topic"
 			
 			};
 			res(userData);

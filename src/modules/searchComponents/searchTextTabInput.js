@@ -5,9 +5,18 @@ class SearchTextInput extends Component {
 	
 	constructor(props) {
 		super(props);
+		const pt = props.textInput;
+		const tb = props.tabInput;
 		this.state = {
-			textInput: ""
+			textInput: (pt !== null && pt !== undefined) ? pt : "",
+			tab: (tb !== null && tb !== undefined) ? tb : "tab",
 		};
+	}
+
+	componentDidUpdate(prevProps) {
+		if (this.props.tabInput !== prevProps.tabInput) {
+			this.setState({tab: this.props.tabInput});
+		}
 	}
 
 	changeTextInput(event) {
@@ -56,7 +65,7 @@ class SearchTextInput extends Component {
 
 				<div className="textInputDiv altDropdown">
 					<select value={this.state.tab} onChange={(e) => this.handleTabChange(e)}>
-						<option defaultValue value="project">Topics</option>
+						<option defaultValue value="topic">Topics</option>
 						<option value="user">Users</option>
 						<option value="saved">Saved</option>
 					</select>

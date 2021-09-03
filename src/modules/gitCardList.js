@@ -3,7 +3,7 @@ import CardBasic from "./cardComponents/cardBasic";
 import CardExpandedUser from "./cardComponents/cardExpandedUser";
 import CardExpandedProject from "./cardComponents/cardExpanedProject";
 import db from "./utils/database";
-import { getProjectDetails, getUserDetails } from "./utils/getGitHttp";
+import { getUserDetails } from "./utils/getGitHttp";
 import { saveItem } from "./utils/savingUtil";
 import "./style/gitCardList.css";
 import FullImg from "./fullImg";
@@ -130,17 +130,20 @@ class GitCardList extends Component {
 				const isLoading = this.state.extraInfo[item.id] === undefined && this.state.openDict[item.id]
 				cardList.push(<CardBasic 
 					isLoading={isLoading}
+					key={item.id}
 					saveObject={(info) => this.saveObject(info, item.type)}
 					showMore={(info) => this.openDictToggle(info, item.type)}
 					showImg={(userImg) => this.openFullImg(userImg)}
 					info={item} type={item.type}></CardBasic>);
 			} else if (item.type === "user") {
 				cardList.push(<CardExpandedUser info={this.state.extraInfo[item.id]} 
+					key={item.id}
 					saveObject={(info) => this.saveObject(info, item.type)}
 					showImg={(userImg) => this.openFullImg(userImg)}
 					hideItem={(info) => this.openDictToggle(info, item.type)}></CardExpandedUser>);
 			} else {
 				cardList.push(<CardExpandedProject info={this.state.extraInfo[item.id]}
+				key={item.id}
 				saveObject={(info) => this.saveObject(info, item.type)}
 				hideItem={(info) => this.openDictToggle(info, item.type)}
 				></CardExpandedProject>);

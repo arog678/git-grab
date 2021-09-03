@@ -23,7 +23,7 @@ class MainDiv extends Component {
 	constructor(props) {
 		super(props);
 		let currentTab = this.props.history.location.pathname.slice(1);
-		if (currentTab === "topic") currentTab = "project";
+		if (currentTab === "topic") currentTab = "topic";
 		this.state = {
 			currentTab,
 			gitResponse: null,
@@ -75,7 +75,7 @@ class MainDiv extends Component {
 		this.setState({loading: true}); 
 		let propParam = this.props.history.location.search;
 		let tabCheck = this.props.history.location.pathname.slice(1);
-		if (tabCheck === "topic") tabCheck = "project"; //topic name fix
+		if (tabCheck === "topic") tabCheck = "topic"; //topic name fix
 		if ((propParam === undefined || propParam === "") && (tabCheck !== "saved")) {
 			if (this.state.currentTab !== tabCheck) {
 				const recentSearches = await this.fillRecentSearches(tabCheck);
@@ -83,15 +83,15 @@ class MainDiv extends Component {
 			}
 			return;
 		} else if ((propParam === undefined || propParam === "") && (tabCheck === "saved")) {
-			propParam = "?textSearch=";
-			this.setState({currentTab: tabCheck});
+			propParam = "?";
+			await this.setState({currentTab: tabCheck});
 		}
-		
-		const queryRes = await queryMain(propParam, tabCheck === "saved" ? "saved" : this.state.currentTab);
+		//const queryRes = await queryMain(propParam, tabCheck === "saved" ? "saved" : this.state.currentTab);
+		const queryRes = await queryMain(propParam, tabCheck);
 		const params = new URLSearchParams(propParam);
 
 		const totalCount = Math.min(queryRes.resp.total_count, 1000); //can only display first 1000
-		const perPage = this.state.currentTab === "project" ? 100 : 30; //100 per topic page, 25 displayed //30 by default 
+		const perPage = this.state.currentTab === "topic" ? 100 : 30; //100 per topic page, 25 displayed //30 by default 
 		const lastPage = Math.ceil(totalCount / perPage);		
 
 		let currentPage = params.get("page") !== null ? params.get("page") : 1;
@@ -100,6 +100,7 @@ class MainDiv extends Component {
 		} else if (lastPage < currentPage) {
 			currentPage = lastPage;
 		}
+		//console.log(tabCheck);
 
 
 		const currentTextSearch = params.get("textSearch");
@@ -107,6 +108,7 @@ class MainDiv extends Component {
 		this.setState({
 			gitResponse: queryRes.items,
 			totalCount: queryRes.resp.total_count,
+			currentTab: tabCheck,
 			currentPage, 
 			loading: false,
 			lastPage,
@@ -115,7 +117,6 @@ class MainDiv extends Component {
 	}  
 
 	async onNewSearch(options) {
-		console.log(options);
 		let currentPage = this.state.currentPage;
 		let tab = this.state.currentTab;
 		let urlDict = this.state.urlDict;
@@ -182,7 +183,7 @@ class MainDiv extends Component {
 
 	async fillRecentSearches(tab = this.state.currentTab) {
 		const dbRef = {
-			"project": "recentProjectSearches",
+			"topic": "recentProjectSearches",
 			"user": "recentUserSearches",
 			"saved": "recentSavedSearches",
 		}
@@ -213,7 +214,7 @@ class MainDiv extends Component {
 		//this.props.searchRequest(this.generateRequest());
 		const requestParams = this.getSearchURL();
 		const tabDict = {
-			"project": "recentProjectSearches",
+			"topic": "recentProjectSearches",
 			"user": "recentUserSearches",
 			"saved": "recentSavedSearches"
 		};
@@ -225,21 +226,22 @@ class MainDiv extends Component {
 		}
 	}
 
+
 	render() {
 		//https://reactrouter.com/web/guides/quick-start
 		//MUST USE ROUTES HERE
 		
 
 		const mainSearchContent = this.getMainSearchContent();
+		//console.log("asd");
 		return (
 			<div >
 				<div id="wrap">
 					<div id="mainContent">
-
 						<TopHeader history={this.props.history}></TopHeader>
 						{!isMobile ? 
-							<div class="largeBoxHolder">
-								<LargeSearchBox isMainDiv={true} history={this.props.history}></LargeSearchBox>
+							<div className="largeBoxHolder">
+								<LargeSearchBox defaultAdv={true} tabInput={this.state.currentTab} isMainDiv={true} history={this.props.history}></LargeSearchBox>
 							</div> :
 							<SearchHeader textSearch={this.state.currentTextSearch} 
 							history={this.props.history} tab={this.state.currentTab} 

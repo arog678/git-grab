@@ -26,7 +26,7 @@ export function userURL(paramsLocation) {
 	if (sortString !== "&") {
 		http = http + sortString;
 	} else {
-		http = http + "&sort=joined&order=desc"
+		http = http + "&sort=joined&order=desc" //this is the default here
 	}
 	if (page !== undefined && page !== null) http += "&page=" + page;
 	return http;
@@ -89,8 +89,6 @@ export async function projectQuery(paramsLocation) {
 	const requestPageSize = 100;
 	const dispayPageSize = 25;
 	let pageNum = params.get("page");
-	let currentPage = 1;
-	let pageSection = 1;
 	let requestPageNum = 1;
 	let requestIndex = 1;
 	if (pageNum !== null) {
@@ -107,7 +105,7 @@ export async function projectQuery(paramsLocation) {
 
 	//this is to fix that screw up
 	const promiseArray = []
-	promiseArray.push(await getHttpRequest(url, "project"));
+	promiseArray.push(await getHttpRequest(url, "topic"));
 	promiseArray.push(await db.savedItems.toArray());//figurre out
 	let [topicsRequest, savedKeys] = await Promise.all(promiseArray);
 	savedKeys = savedKeys.map(i => i.itemId);
@@ -120,20 +118,20 @@ export async function projectQuery(paramsLocation) {
 	if (topicsRequest["items"] !== undefined && topicsRequest["items"] !== null) {
 		//sort 1 === asc 
 		//sort 2 === desc
-		const sortFunc = (sortParamName) => {
+		const sortFunc = (sortParamName, itemName) => {
 			const sortParam = params.get(sortParamName);
 			if (sortParam !== undefined && sortParam !== null && sortParam !== "0") {
 				topicsRequest["items"].sort((a, b) => {
-					const aName = a.name.toLowerCase();
-					const bName = b.name.toLowerCase();
-					const nameCompare = (aName < bName ? 1 : -1);
-					return (sortParam === "1" ? nameCompare : !nameCompare);
+					const aName = a[itemName].toLowerCase();
+					const bName = b[itemName].toLowerCase();
+					const nameCompare = (aName > bName ? 1 : -1);
+					return (sortParam === "1" ? nameCompare : -nameCompare);
 				});
 
 			}
 		};
-		sortFunc("nameSort");
-		sortFunc("createdAtSort")
+		sortFunc("nameSort", "name");
+		sortFunc("createdAtSort", "createdAt")
 		topicsRequest["items"].map(i => i.saved = savedKeys.includes(i.id));
 
 	} 
@@ -154,7 +152,7 @@ export async function savedQuery(paramsLocation) {
 		page: params.get("page"),
 		textSearch: params.get("textSearch"),
 		dateSaved: params.get("dateSaved"),
-		projectCheck: params.get("projectCheck"),
+		projectCheck: params.get("topicCheck"),
 		userCheck: params.get("userCheck"),
 	}
 
@@ -163,7 +161,7 @@ export async function savedQuery(paramsLocation) {
 
 export async function queryMain(paramsLocation, type) {
 	if (type === "saved") return await savedQuery(paramsLocation);
-	if (type === "project") return await projectQuery(paramsLocation);
+	if (type === "topic") return await projectQuery(paramsLocation);
 	if (type === "user") return await userQuery(paramsLocation);
 }
 

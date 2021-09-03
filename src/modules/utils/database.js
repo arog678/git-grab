@@ -10,6 +10,16 @@ db.version(1).stores({
 	recentSavedSearches: "++id, textSearch, otherInfo",
 });
 
+db.version(2).stores({
+    project: `id, name, url, createdAt, updatedAt, desc, userImg, userName, userLink`,
+	user: "id, name, url, createdAt, updatedAt, desc, userImg",
+	savedItems: "++id, itemId, dateSaved, type, name",
+	recentProjectSearches: "++id, textSearch, otherInfo",
+	recentUserSearches: "++id, textSearch, otherInfo",
+	recentSavedSearches: "++id, textSearch, otherInfo",
+	topic: `id, name, url, createdAt, updatedAt, desc, userImg, userName, userLink`,
+});
+
 export default db;
 
 //userText: match this with what is in local db,

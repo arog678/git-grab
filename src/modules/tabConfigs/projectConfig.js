@@ -5,7 +5,7 @@
 //General template will be used more of as a builder function
 //These are whats used as sort of templates
 
-const tabName = "project";
+const tabName = "topic";
 
 const searchItems = "";
 const urlName = "repositories";
@@ -95,7 +95,7 @@ function dataCardDetailed(data) {
 		{title: "User-Link", id: "userLink", content: <span>data.owner.html_url</span>, show: true},
 		{title: "UserImg", id: "userImg", content: <span>data.owner.avatar_url</span>, show: true},
 		{titile: "Saved", id:"saved", content: false, show: false},
-		{titile: "type", id:"type", content: "project", show: false},
+		{titile: "type", id:"type", content: "topic", show: false},
 	];
 }
 

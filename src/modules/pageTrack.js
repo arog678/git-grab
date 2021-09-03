@@ -18,7 +18,7 @@ class PageTrack extends Component {
 
 	atStart() {
 		const currentPage = this.props.currentPage;
-		return currentPage === 1;
+		return currentPage === 1 || 0;
 	}
 
 
@@ -58,8 +58,9 @@ class PageTrack extends Component {
 		}
 		const pageNum = pageDict[moveRef];
 		let path = this.props.history.location.search
-
-		if (paramPage !== undefined && paramPage !== null) {
+		if (params.get("textSearch") === null) {
+			path = "?page=" + pageNum;
+		} else if (paramPage !== undefined && paramPage !== null) {
 			const pageOld = "&page=" + paramPage;
 			const pageNew = "&page=" + pageNum;
 			path = path.replace(pageOld, pageNew);
@@ -82,16 +83,15 @@ class PageTrack extends Component {
 		const atEnd = this.atEnd();
 		const turnBackClass = atStart ? "pageButton disableClick" : "pageButton";
 		const turnNextClass = atEnd ? "pageButton disableClick" : "pageButton";
-
 		
 		return (
 			<div >
 				<div className="pageDiv noSelect">
-					<div onClick={() => this.movePage("first")} className={turnBackClass}>First</div>
-					<div onClick={() => this.movePage("prev")} className={turnBackClass}>Prev</div>
+					<div onClick={() => atStart ? null : this.movePage("first")} className={turnBackClass}>First</div>
+					<div onClick={() => atStart ? null : this.movePage("prev")} className={turnBackClass}>Prev</div>
 					<div className="pageButton">{currentPage}/{lastPage}</div>
-					<div onClick={() => this.movePage("next")} className={turnNextClass}>Next</div>
-					<div onClick={() => this.movePage("last")} className={turnNextClass}>Last</div>
+					<div onClick={() => atEnd ? null : this.movePage("next")} className={turnNextClass}>Next</div>
+					<div onClick={() => atEnd ? null : this.movePage("last")} className={turnNextClass}>Last</div>
 				</div>
 				<div className="bottomGap"></div>
 			</div>

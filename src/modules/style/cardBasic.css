@@ -53,6 +53,7 @@
 	background: rgba(2555,255,255,0.8);
 	/*Absolute will be used only for mobiles*/
 	width: 50%;
+	overflow: hidden;
 	
 	
 
@@ -118,4 +119,9 @@
 .saved{
 	color: white;
 	background-color: black;
+}
+
+.searchIcon {
+	display: inline-block;
+	margin-left: .25em;
 }

@@ -16,6 +16,7 @@
 .disableClick{
 	color: grey;
 	border-color: grey;
+	cursor: default;
 }
 
 .noSelect {

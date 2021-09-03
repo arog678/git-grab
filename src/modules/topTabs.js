@@ -6,7 +6,7 @@ class TopTabs extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			currentTab: "project"
+			currentTab: "topic"
 		};
 	}
 
@@ -56,7 +56,7 @@ class TopTabs extends Component {
 
 	render() {
 		//change name to id if issues come up
-		const tabItemsList = ["Project", "User", "Saved"];
+		//const tabItemsList = ["Topic", "User", "Saved"];
 		const tabElements = this.newTabElements(this.props.currentTab);
 
 		

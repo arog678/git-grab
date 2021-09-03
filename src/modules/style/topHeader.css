@@ -68,4 +68,10 @@
     margin-left: 5px;
     color: white;
     margin-left: 1em;
+	cursor: pointer;
+}
+
+.icon{
+	margin-right: .25em;
+	display: inline-block;
 }

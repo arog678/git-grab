@@ -14,7 +14,7 @@ class MainDiv extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			currentTab: "project",
+			currentTab: "topic",
 			gitResponse: null,
 			currentPage: 1,
 			searchParams: {},

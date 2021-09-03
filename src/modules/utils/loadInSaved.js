@@ -10,17 +10,17 @@ export default async function loadSaved(options) {
 	//page
 	//textSearch
 
-	if (options.project === undefined) options["project"] = true;
+	if (options.topic === undefined) options["topic"] = true;
 	if (options.user === undefined) options["user"] = true;
 
 	const typeList = []
 	if (options.user) typeList.push("user");
-	if (options.project) typeList.push("project");
-	options.textSearch = options.textSearch.toLowerCase();
+	if (options.topic) typeList.push("topic");
+	if (options.textSearch) options.textSearch = options.textSearch.toLowerCase();
 
 	const filterFunc = (i) => {
 		if (!typeList.includes(i.type)) return false;
-		if (!i.name.toLowerCase().includes(options.textSearch)) return false;
+		if (options.textSearch && !i.name.toLowerCase().includes(options.textSearch)) return false;
 		return true
 	};
 
@@ -48,7 +48,7 @@ export default async function loadSaved(options) {
 		currentPageStart = (currentPage - 1) * pageSize;
 	}
 
-	const savedItemsOnPage = savedItems.slice(currentPageStart, pageSize);
+	const savedItemsOnPage = savedItems.slice(currentPageStart, currentPageStart + pageSize);
 
 	const idList = savedItemsOnPage.reduce((arr, i) => {
 		arr.push(i.itemId);
@@ -57,8 +57,8 @@ export default async function loadSaved(options) {
 
 	let savedPage = [];
 
-	if (options.project) {
-		const projects = await db.project.where("id").anyOf(idList).toArray();
+	if (options.topic) {
+		const projects = await db.topic.where("id").anyOf(idList).toArray();
 		savedPage = savedPage.concat(projects);
 	}
 
@@ -70,7 +70,10 @@ export default async function loadSaved(options) {
 	const finalPage = [];
 	for (const item of savedItemsOnPage) {
 		const savedItem = savedPage.find(i => i.id === item.itemId);
-		if (savedItem !== undefined) finalPage.push(savedItem); //save error if true
+		if (savedItem !== undefined) {//save error if true
+			finalPage.push(savedItem); 
+			savedItem["saved"] = true;
+		}
 	}
 
 	return {items: finalPage, resp: {total_count: len}};

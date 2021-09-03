@@ -2,6 +2,7 @@ import { Component } from "react";
 import "./style/cardBasic.css";
 import db from "./utils/database";
 import pushSearchData from "./utils/savingUtil";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 //import { v4 as uuidv4 } from 'uuid'; //may be a bit heavy
 
 
@@ -29,12 +30,12 @@ class RecentSearchSelect extends Component {
 	}
 
 	componentWillUnmount() {
-		console.log("UNMOUNT");
+		//console.log("UNMOUNT");
 	}
 
 	async fillRecentSearches() {
 		const dbRef = {
-			"project": "recentProjectSearches",
+			"topic": "recentProjectSearches",
 			"user": "recentUserSearches",
 			"saved": "recentSavedSearches",
 		}
@@ -43,13 +44,13 @@ class RecentSearchSelect extends Component {
 		this.setState({
 			recentSearches
 		}, () => {
-			console.log("UPDAtE STATE");
+			//console.log("UPDAtE STATE");
 		});
 	}
 
 	searchText(item) {
 		const dbRef = {
-			"project": "recentProjectSearches",
+			"topic": "recentProjectSearches",
 			"user": "recentUserSearches",
 			"saved": "recentSavedSearches",
 		};
@@ -68,7 +69,11 @@ class RecentSearchSelect extends Component {
 			//uuidv4(); too heavy
 			const keyName = "recentSearch" + this.state.tab + indexCount;
 			searchCards.push(<div key={keyName} onClick={() => this.searchText(item)} className={className}>
-				<span className="textSearchSpan">{item.textSearch}</span>
+
+				<span className="textSearchSpan">
+					
+					{item.textSearch}
+				</span>
 			</div>);
 			indexCount ++;
 		}
