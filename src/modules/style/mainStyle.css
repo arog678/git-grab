@@ -25,7 +25,8 @@
 }
 
 .largeBoxHolder{
-	width: 620px;
+	/*width: 620px;*/
+	width: 40em;
     position: sticky;
     float: left;
     display: block;

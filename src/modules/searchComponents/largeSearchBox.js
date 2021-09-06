@@ -139,6 +139,7 @@ class LargeSearchBox extends Component {
 
 	searchGit() {
 		//this.props.searchRequest(this.generateRequest());
+		console.log("HELLO");
 		const requestParams = this.getSearchURL();
 		const tabDict = {
 			"topic": "recentProjectSearches",
@@ -169,59 +170,107 @@ class LargeSearchBox extends Component {
 	getProjectButtons() {
 		const isMainDiv = this.getIsMainDiv();
 		const dictKey = isMainDiv ? "main" : "home";
+		const alt = !this.props.isMobile;
 
 		return <div>
-			<SearchCheckBox default={this.featured} key="featuredCheck" alt={true} title={this.titleDict["featuredCheck"][dictKey]} ref={this.featuredCheck}></SearchCheckBox><br></br>
-			<SearchSortButton sortInput={this.nameSort} key="nameSort" alt={true} title={this.titleDict["nameSort"][dictKey]} ref={this.nameOrder}></SearchSortButton><br></br>
-			<SearchSortButton sortInput={this.createdAtSort} key="dateSort" alt={true} title={this.titleDict["dateSort"][dictKey]} ref={this.createdAtOrder}></SearchSortButton><br></br>
+			<SearchCheckBox default={this.featured} key="featuredCheck" alt={alt} title={this.titleDict["featuredCheck"][dictKey]} ref={this.featuredCheck}></SearchCheckBox>{alt ? <br></br> : null}
+			<SearchSortButton sortInput={this.nameSort} key="nameSort" alt={alt} title={this.titleDict["nameSort"][dictKey]} ref={this.nameOrder}></SearchSortButton>{alt ? <br></br> : null}
+			<SearchSortButton sortInput={this.createdAtSort} key="dateSort" alt={alt} title={this.titleDict["dateSort"][dictKey]} ref={this.createdAtOrder}></SearchSortButton>{alt ? <br></br> : null}
 		</div>
 	}
 
 	getUserButtons() {
 		const isMainDiv = this.getIsMainDiv();
 		const dictKey = isMainDiv ? "main" : "home";
+		const alt = !this.props.isMobile;
 
 		return <div>
-			<SearchSortButton sortInput={this.followerSort} key="followerSort" alt={true} title={this.titleDict["followerSort"][dictKey]} ref={this.followerOrder}></SearchSortButton><br></br>
-			<SearchSortButton sortInput={this.repositorsSort} key="repoSort" alt={true} title={this.titleDict["repoSort"][dictKey]} ref={this.repositorsOrder}></SearchSortButton><br></br>
-			<SearchSortButton sortInput={this.joinedSort} key="joinSort" alt={true} title={this.titleDict["joinSort"][dictKey]} ref={this.joinedOrder}></SearchSortButton><br></br>
+			<SearchSortButton sortInput={this.followerSort} key="followerSort" alt={alt} title={this.titleDict["followerSort"][dictKey]} ref={this.followerOrder}></SearchSortButton>{alt ? <br></br> : null}
+			<SearchSortButton sortInput={this.repositorsSort} key="repoSort" alt={alt} title={this.titleDict["repoSort"][dictKey]} ref={this.repositorsOrder}></SearchSortButton>{alt ? <br></br> : null}
+			<SearchSortButton sortInput={this.joinedSort} key="joinSort" alt={alt} title={this.titleDict["joinSort"][dictKey]} ref={this.joinedOrder}></SearchSortButton>{alt ? <br></br> : null}
 		</div>
 	}
 
 	getSavedButtons() {
 		const isMainDiv = this.getIsMainDiv();
 		const dictKey = isMainDiv ? "main" : "home";
+		const alt = !this.props.isMobile;
 
 		return <div className="searchButtons">
-			<SearchCheckBox default={this.project} key="projectCheck" alt={true} title={this.titleDict["projectCheck"][dictKey]} ref={this.projectCheck}></SearchCheckBox><br></br>
-			<SearchCheckBox default={this.user} key="userCheck" alt={true} title={this.titleDict["userCheck"][dictKey]} ref={this.userCheck}></SearchCheckBox><br></br>
-			<SearchSortButton sortInput={this.dateSaved} key="dateSavedSort" alt={true} title={this.titleDict["dateSavedSort"][dictKey]} ref={this.dateSavedRef}></SearchSortButton><br></br>
+			<SearchCheckBox default={this.project} key="projectCheck" alt={alt} title={this.titleDict["projectCheck"][dictKey]} ref={this.projectCheck}></SearchCheckBox>{alt ? <br></br> : null}
+			<SearchCheckBox default={this.user} key="userCheck" alt={alt} title={this.titleDict["userCheck"][dictKey]} ref={this.userCheck}></SearchCheckBox>{alt ? <br></br> : null}
+			<SearchSortButton sortInput={this.dateSaved} key="dateSavedSort" alt={alt} title={this.titleDict["dateSavedSort"][dictKey]} ref={this.dateSavedRef}></SearchSortButton>{alt ? <br></br> : null}
 		</div>
+	}
+
+	searchSaved() {
+		//pushSavedSearchData(this.searchTextRef.current.getTextInput(), {});
+		this.props.savedRequest(this.getCurrentSearchParams());
+	}
+
+	testInput() {
+		console.log("HELLO");
+	}
+
+	getElementClassName() {
+		const isMainDiv = this.getIsMainDiv();
+		if (this.props.isMobile && isMainDiv) return "stickyParent"
+		else if (isMainDiv) return "largeSearchBox mainSearch stickyParent";
+		else return "largeSearchBox stickyParent";
+	}
+
+	getElements(advancedFeatures) {
+		const isMainDiv = this.getIsMainDiv();
+
+		if (this.props.isMobile && isMainDiv) {
+			return (
+					<div className="searchMain stickySearch">
+						<SearchTextInput key="mobileSearchInput" textInput={this.textSearch} 
+						searchSignal={() => this.testInput()}
+						ref={this.searchTextRef}></SearchTextInput>
+						{advancedFeatures}
+					</div>
+			);
+		} else {
+			return (
+			<div>
+				<SearchTextTabInput key="largeSearchInput"
+				tabInput={this.state.tab} textInput={this.textSearch}  
+				alt={true} isMainDiv={isMainDiv} tabChange={(tab) => this.tabChangeState(tab)} 
+				searchSignal={() => this.searchGit()} ref={this.searchTextRef}></SearchTextTabInput>
+				<div className="advancedDiv">
+					<span className="advancedToggle noSelect" onClick={() => this.toggleAdvanced()}>
+						{!this.state.advanced ? "Show Advanced Options +" : "Hide Advanced Options -"}
+					</span>
+					<div className={this.state.advanced ? "advancedBox" : "advancedBox hidden"}>			
+						{advancedFeatures}
+					</div>
+				</div>
+			</div>
+		);
+		}
+
 	}
 
 
 	render() {
-		const isMainDiv = this.getIsMainDiv();
 
 		let advancedFeatures;
 		if (this.state.tab === "topic") advancedFeatures = this.getProjectButtons();
 		else if (this.state.tab === "user") advancedFeatures = this.getUserButtons();
 		else if (this.state.tab === "saved") advancedFeatures = this.getSavedButtons();
-		return (
-			<div className={"largeSearchBox" + (isMainDiv ? " mainSearch stickyParent" : "")}>
-				{this.props.tab !== undefined ? 
-				<SearchTextInput alt={true} searchSignal={() => this.searchGit()} ref={this.searchTextRef}></SearchTextInput>
-				: <SearchTextTabInput tabInput={this.state.tab} textInput={this.textSearch}  alt={true} isMainDiv={isMainDiv} tabChange={(tab) => this.tabChangeState(tab)} searchSignal={() => this.searchGit()} ref={this.searchTextRef}></SearchTextTabInput>}
-				
-				<div className="advancedDiv">
-					<span className="advancedToggle noSelect" onClick={() => this.toggleAdvanced()}>{!this.state.advanced ? "Show Advanced Options +" : "Hide Advanced Options -"}</span>
-					<div className={this.state.advanced ? "advancedBox" : "advancedBox hidden"}>
-						
-						{advancedFeatures}
-					</div>
-				</div>
 
-			</div>
+		const searchElements = this.getElements(advancedFeatures);
+		const mainClassName = this.getElementClassName();
+		return (
+			
+			//{this.props.isMobile ? 
+				<div className={mainClassName}>{searchElements}</div>
+			//:
+			//<div className="stickyParent">
+			//	{searchItem}
+			//</div>
+			//}
 		)
 	}
 

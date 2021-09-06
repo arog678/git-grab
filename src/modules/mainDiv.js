@@ -241,12 +241,10 @@ class MainDiv extends Component {
 						<TopHeader history={this.props.history}></TopHeader>
 						{!isMobile ? 
 							<div className="largeBoxHolder">
-								<LargeSearchBox defaultAdv={true} tabInput={this.state.currentTab} isMainDiv={true} history={this.props.history}></LargeSearchBox>
+								<LargeSearchBox isMobile={isMobile} defaultAdv={true} tabInput={this.state.currentTab} isMainDiv={true} history={this.props.history}></LargeSearchBox>
 							</div> :
-							<SearchHeader textSearch={this.state.currentTextSearch} 
-							history={this.props.history} tab={this.state.currentTab} 
-							searchSaved={(savedOptions) => this.onNewSearch({savedOptions})} 
-							newSearch={(url) => this.onNewSearch({url})}></SearchHeader>
+
+<LargeSearchBox isMobile={isMobile} defaultAdv={true} tabInput={this.state.currentTab} isMainDiv={true} history={this.props.history}></LargeSearchBox>
 						}
 							
 						<TopTabs totalResults={this.state.totalCount} history={this.props.history} currentTab={this.state.currentTab}></TopTabs>
