@@ -3,7 +3,7 @@ import MainDiv from "./modules/mainDiv";
 import HomePage from "./modules/homePage";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
-import { faCheckSquare, faHome, faSave, faQuestionCircle, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faCheckSquare, faHome, faSave, faQuestionCircle, faSearch, faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
 import {
 	Switch,
@@ -14,7 +14,7 @@ import {
 	Redirect
   } from "react-router-dom";
 
-  library.add(fab, faCheckSquare, faHome, faSave, faQuestionCircle, faSearch);
+  library.add(fab, faCheckSquare, faHome, faSave, faQuestionCircle, faSearch, faChevronDown, faChevronUp);
 
 
   function useQuery() {

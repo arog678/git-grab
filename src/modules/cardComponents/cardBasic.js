@@ -1,5 +1,6 @@
 import { Component } from "react";
 import "../style/cardBasic.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 class CardBasic extends Component {
 	
@@ -39,6 +40,10 @@ class CardBasic extends Component {
 	render() {
 		//this.props.info for name and link stuff
 		const info = this.props.info;
+
+		//put in icons but did not like how they looked 
+		//<div className="searchIcon"><FontAwesomeIcon icon="chevron-down"></FontAwesomeIcon></div>
+
 		return (
 			<div className="basicCardDetail">
 				<div className="avatarDiv">
@@ -56,7 +61,9 @@ class CardBasic extends Component {
 					<div className="bottomButtons">
 						{this.props.isLoading ? 
 							<button className="cardButton">LOADING</button> :
-							<button className="cardButton" onClick={() => this.showMore(info)}>Show More</button>
+							<button className="cardButton" onClick={() => this.showMore(info)}>
+								Show More
+							</button>
 						}
 						<button className={"cardButton" + (this.state.isSaved ? " saved" : "")} onClick={() => this.saveObject(info)}>{this.state.isSaved ? "Saved" : "Save"}</button>
 					</div>

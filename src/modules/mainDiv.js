@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import GitCardList from "./gitCardList";
 import PageTrack from "./pageTrack";
-import SearchHeader from "./searchHeader";
 import TopHeader from "./topHeader";
 import TopTabs from "./topTabs";
 import db from "./utils/database";
@@ -244,7 +243,7 @@ class MainDiv extends Component {
 								<LargeSearchBox isMobile={isMobile} defaultAdv={true} tabInput={this.state.currentTab} isMainDiv={true} history={this.props.history}></LargeSearchBox>
 							</div> :
 
-<LargeSearchBox isMobile={isMobile} defaultAdv={true} tabInput={this.state.currentTab} isMainDiv={true} history={this.props.history}></LargeSearchBox>
+							<LargeSearchBox isMobile={isMobile} defaultAdv={true} tabInput={this.state.currentTab} isMainDiv={true} history={this.props.history}></LargeSearchBox>
 						}
 							
 						<TopTabs totalResults={this.state.totalCount} history={this.props.history} currentTab={this.state.currentTab}></TopTabs>
