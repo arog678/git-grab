@@ -1,6 +1,7 @@
 import "./App.css";
 import MainDiv from "./modules/mainDiv";
 import HomePage from "./modules/homePage";
+import ContactForm from "./modules/testapp";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { faCheckSquare, faHome, faSave, faQuestionCircle, faSearch, faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";

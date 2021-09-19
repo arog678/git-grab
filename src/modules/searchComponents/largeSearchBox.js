@@ -226,7 +226,7 @@ class LargeSearchBox extends Component {
 			return (
 					<div className="searchMain stickySearch">
 						<SearchTextInput key="mobileSearchInput" textInput={this.textSearch} 
-						searchSignal={() => this.testInput()}
+						searchSignal={() => this.searchGit()}
 						ref={this.searchTextRef}></SearchTextInput>
 						{advancedFeatures}
 					</div>
