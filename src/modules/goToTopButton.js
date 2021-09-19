@@ -9,8 +9,6 @@ class GoToTopButton extends Component {
 		};
 	}
 
-
-
 	render() {
 		
 		return (

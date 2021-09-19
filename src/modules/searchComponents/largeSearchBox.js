@@ -76,7 +76,7 @@ class LargeSearchBox extends Component {
 	  
 
 	static componentDidUpdate() {
-		console.log("HELLOW")
+		//console.log("HELLOW")
 	}
 
 	getCurrentSearchParams() {
@@ -139,7 +139,6 @@ class LargeSearchBox extends Component {
 
 	searchGit() {
 		//this.props.searchRequest(this.generateRequest());
-		console.log("HELLO");
 		const requestParams = this.getSearchURL();
 		const tabDict = {
 			"topic": "recentProjectSearches",

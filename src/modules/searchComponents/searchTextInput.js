@@ -5,7 +5,6 @@ class SearchTextInput extends Component {
 	
 	constructor(props) {
 		super(props);
-		console.log(props);
 		
 		const pt = props.textInput
 		this.state = {
@@ -20,11 +19,9 @@ class SearchTextInput extends Component {
 	//VALIDATE???
 
 	searchGit() {
-		console.log("hello");
 		if (this.state.textInput === "") {
 			alert("NEED INPUT HERE");
 		} else {
-			console.log(2);
 			this.props.searchSignal();
 		}
 	}
